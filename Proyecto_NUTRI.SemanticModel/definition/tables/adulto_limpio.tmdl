@@ -1,0 +1,1049 @@
+table adulto_limpio
+	lineageTag: 442840aa-8b89-4520-852f-8488376d740e
+
+	measure 'Prevalencia Exceso Peso' =
+			
+			VAR PersonasConExceso = CALCULATE(COUNTROWS(adulto_limpio), adulto_limpio[IMC_INE] IN {3, 4})
+			VAR TotalPersonasConIMC = CALCULATE(COUNTROWS(adulto_limpio), NOT(ISBLANK(adulto_limpio[IMC_INE])))
+			RETURN
+			DIVIDE(PersonasConExceso, TotalPersonasConIMC, 0)
+		formatString: 0.00\ %;-0.00\ %;0.00\ %
+		lineageTag: a5c33cfd-123e-4ff7-80c6-f484facff493
+
+	measure 'Total Adultos' =
+			
+			CALCULATE(COUNTROWS(adulto_limpio), NOT(ISBLANK(adulto_limpio[EDAD])))
+		formatString: 0
+		lineageTag: fa6c65b0-6bc5-4aa6-bd69-b93d59d33b43
+
+	measure 'Prevalencia Hipertension' =
+			
+			DIVIDE(
+			    CALCULATE(COUNTROWS(adulto_limpio), adulto_limpio[DIAG_TENSION_ALTA] = "Si"),
+			    [Total Adultos]
+			)
+		formatString: 0\ %;-0\ %;0\ %
+		lineageTag: c36dd56d-4cda-412f-bdeb-6340bf482f6e
+
+	measure 'Prevalencia Diabetes' =
+			
+			DIVIDE(CALCULATE(COUNTROWS(adulto_limpio), adulto_limpio[DIAG_DIABETES] = "Si"), [Total Adultos])
+		formatString: 0\ %;-0\ %;0\ %
+		lineageTag: 5f72de37-a412-4eb4-80f5-0d1ccc0ea330
+
+	measure 'Prevalencia Colesterol' =
+			
+			DIVIDE(CALCULATE(COUNTROWS(adulto_limpio), adulto_limpio[DIAG_COLESTEROL] = "Si"), [Total Adultos])
+		formatString: 0\ %;-0\ %;0\ %
+		lineageTag: 67c96f1f-35ff-4d99-9732-96a89668494d
+
+	measure 'Prevalencia Enf Corazon' =
+			
+			DIVIDE(CALCULATE(COUNTROWS(adulto_limpio), adulto_limpio[DIAG_ENFERMEDADES_CORAZON] = "Si"), [Total Adultos])
+		formatString: 0\ %;-0\ %;0\ %
+		lineageTag: 702bea10-3df0-4f24-8cc6-9060bcbe9e62
+
+	measure 'Prevalencia Osteoporosis %' =
+			
+			DIVIDE(CALCULATE(COUNTROWS(adulto_limpio), adulto_limpio[DIAG_OSTEOPOROSIS] = "Si"), [Total Adultos])
+		formatString: 0\ %;-0\ %;0\ %
+		lineageTag: 999568cd-7831-4272-ace6-0dd0e7437ce6
+
+	measure 'Prevalencia Cualquier Patologia Nutricional %' =
+			
+			DIVIDE(
+			    CALCULATE(
+			        COUNTROWS(adulto_limpio),
+			        adulto_limpio[DIAG_TENSION_ALTA] = "Si" ||
+			        adulto_limpio[DIAG_DIABETES] = "Si" ||
+			        adulto_limpio[DIAG_COLESTEROL] = "Si" ||
+			        adulto_limpio[DIAG_ENFERMEDADES_CORAZON] = "Si"
+			    ),
+			    [Total Adultos]
+			)
+		formatString: 0\ %;-0\ %;0\ %
+		lineageTag: 71f67304-6686-4f07-952a-f94d839860a3
+
+	measure 'Usa Med Tension' =
+			
+			DIVIDE(CALCULATE(COUNTROWS(adulto_limpio), adulto_limpio[MED_TENSION_CONSUMIDOS] = "Si"), [Total Adultos])
+		formatString: 0\ %;-0\ %;0\ %
+		lineageTag: de638a4c-c179-4046-890b-5c37f9eba0ee
+
+	measure 'Usa Med Diabetes' =
+			
+			DIVIDE(CALCULATE(COUNTROWS(adulto_limpio), adulto_limpio[MED_DIABETES_CONSUMIDOS] = "Si"), [Total Adultos])
+		formatString: 0\ %;-0\ %;0\ %
+		lineageTag: 675aa066-6a04-4198-a98b-d082b62f4f5e
+
+	measure 'Usa Med Colesterol' =
+			
+			DIVIDE(CALCULATE(COUNTROWS(adulto_limpio), adulto_limpio[MED_COLESTEROL_CONSUMIDOS] = "Si"), [Total Adultos])
+		formatString: 0\ %;-0\ %;0\ %
+		lineageTag: 1b6c5212-cc46-479c-bdd7-85d1508fdf74
+
+	measure 'Usa Med Adelgazar' =
+			
+			DIVIDE(CALCULATE(COUNTROWS(adulto_limpio), adulto_limpio[MED_ADELGAZAR_CONSUMIDOS] = "Si"), [Total Adultos])
+		formatString: 0\ %;-0\ %;0\ %
+		lineageTag: e7cdaa2a-0aad-43ea-bd14-c30232409256
+
+	measure 'Prevalencia Sobrepeso' =
+			
+			VAR PersonasConSobrepeso = CALCULATE(COUNTROWS(adulto_limpio), adulto_limpio[IMC_INE] IN {3})
+			VAR TotalPersonasConIMC = CALCULATE(COUNTROWS(adulto_limpio), NOT(ISBLANK(adulto_limpio[IMC_INE])))
+			RETURN
+			DIVIDE(PersonasConSobrepeso, TotalPersonasConIMC, 0)
+		formatString: 0.00\ %;-0.00\ %;0.00\ %
+		lineageTag: 4dead79a-275c-42aa-a64d-8d7f08f4a454
+
+	measure 'Prevalencia Obesidad' =
+			
+			VAR PersonasConObesidad = CALCULATE(COUNTROWS(adulto_limpio), adulto_limpio[IMC_INE] IN {4})
+			VAR TotalPersonasConIMC = CALCULATE(COUNTROWS(adulto_limpio), NOT(ISBLANK(adulto_limpio[IMC_INE])))
+			RETURN
+			DIVIDE(PersonasConObesidad, TotalPersonasConIMC, 0)
+		formatString: 0.00\ %;-0.00\ %;0.00\ %
+		lineageTag: 5b79ccfe-cf2a-446b-a835-9fe9fb30ae24
+
+	measure 'Total Adultos Texto' =
+			
+			FORMAT(CALCULATE(COUNTROWS(adulto_limpio), NOT(ISBLANK(adulto_limpio[EDAD]))), "#,##0")
+		lineageTag: 7de6aae3-c41c-445f-82fe-1b7d6e894ecd
+
+	measure 'Usa Med Corazon' =
+			
+			DIVIDE(CALCULATE(COUNTROWS(adulto_limpio), adulto_limpio[MED_CORAZON_CONSUMIDOS] = "Si"), [Total Adultos])
+		formatString: 0\ %;-0\ %;0\ %
+		lineageTag: 2a16fb43-7852-4134-ab99-5bb3063762e3
+
+	measure '% Sedentario' = ```
+			
+			DIVIDE(
+			    CALCULATE(COUNTROWS(adulto_limpio), 
+			        adulto_limpio[Frecuencia Activ Fisica] = "No hago ejercicio. El tiempo libre lo ocupo de forma casi completamente sedentaria"),
+			    [Total Adultos]
+			)
+			```
+		formatString: 0\ %;-0\ %;0\ %
+		lineageTag: f762a674-683e-4918-9226-550012843fe6
+
+	measure '% Activo Regular' = ```
+			
+			DIVIDE(
+			    CALCULATE(COUNTROWS(adulto_limpio), 
+			        adulto_limpio[Frecuencia Activ Fisica] = "Hago entrenamiento deportivo o físico varias veces a la semana"),
+			    [Total Adultos]
+			)
+			```
+		formatString: 0\ %;-0\ %;0\ %
+		lineageTag: 4d9c80aa-a67b-4a1a-8cb8-b2b6d0f0ff3a
+
+		changedProperty = IsHidden
+
+	measure '% Consume Comida Rapida Frecuente' =
+			
+			DIVIDE(
+			    CALCULATE(COUNTROWS(adulto_limpio),
+			        adulto_limpio[FREC_COMIDA_RAPIDA_PIZZA_HAMBURGUESAS] IN {"Una o más veces al día", "De 4 a 6 veces a la semana", "Tres veces a la semana"}),
+			    [Total Adultos]
+			)
+		formatString: 0\ %;-0\ %;0\ %
+		lineageTag: bc321f88-9b6f-476e-93d0-fe8d71ee61ac
+
+	measure '% Consume Fruta Diario' =
+			
+			DIVIDE(
+			    CALCULATE(COUNTROWS(adulto_limpio),
+			        adulto_limpio[FREC_FRUTA_FRESCA_EXCLU_ZUMOS] = "Una o más veces al día"),
+			    [Total Adultos]
+			)
+		formatString: 0\ %;-0\ %;0\ %
+		lineageTag: c774db53-d531-473f-b87d-6ca0fa6a040f
+
+	measure '% Consume Verdura Diario' =
+			
+			DIVIDE(
+			    CALCULATE(COUNTROWS(adulto_limpio),
+			        adulto_limpio[FREC_VERDURAS_ENSALADAS_HORTALIZAS] = "Una o más veces al día"),
+			    [Total Adultos]
+			)
+		formatString: 0\ %;-0\ %;0\ %
+		lineageTag: 2fdbfe1a-8c51-4f12-a12a-721f2249b44a
+
+	measure '% Consume Refrescos Frecuente' =
+			
+			DIVIDE(
+			    CALCULATE(COUNTROWS(adulto_limpio),
+			        adulto_limpio[FREC_REFRESCOS_AZUCAR] IN {"Una o más veces al día", "De 4 a 6 veces a la semana"}),
+			    [Total Adultos]
+			)
+		formatString: 0\ %;-0\ %;0\ %
+		lineageTag: ea3c3fe2-7280-47ce-b959-d656d321ce52
+
+	measure '% Consume Embutidos Frecuente' =
+			
+			DIVIDE(
+			    CALCULATE(COUNTROWS(adulto_limpio),
+			        adulto_limpio[FREC_EMBUTIDOS_FIAMBRES] IN {"Una o más veces al día", "De 4 a 6 veces a la semana", "Tres veces a la semana"}),
+			    [Total Adultos]
+			)
+		formatString: 0\ %;-0\ %;0\ %
+		lineageTag: fbc6730a-288f-4e65-9381-a6067348a5d9
+
+	measure 'Minutos Sedentarismo Semana Mediana' =
+			
+			MEDIAN(adulto_limpio[TOTAL_MINUTOS_SEDENTARISMO_SEMANA])
+		lineageTag: 6e033e04-f890-4990-97cb-2b9faee53cb4
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Minutos Actv Fisica Semana Mediana' =
+			
+			MEDIAN(adulto_limpio[TOTAL_MINUTOS_ACTV_FISICA_SEMANA])
+		formatString: 0
+		lineageTag: d2950055-9d6f-432d-8f0d-2e55cc546c11
+
+	measure 'Minutos Actv Fisica Semana Promedio' =
+			
+			AVERAGE(adulto_limpio[TOTAL_MINUTOS_ACTV_FISICA_SEMANA])
+		lineageTag: e60a4152-abec-43d0-b8c6-c0962a77d3c3
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Minutos Sedentarismo Semana Promedio' =
+			
+			AVERAGE(adulto_limpio[TOTAL_MINUTOS_SEDENTARISMO_SEMANA])
+		lineageTag: e7c81215-c4a0-4e78-9d86-d7b826c641fa
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Blanks Actividad Fisica' =
+			
+			CALCULATE(COUNTROWS(adulto_limpio), ISBLANK(adulto_limpio[Frecuencia Activ Fisica]))
+		formatString: 0
+		lineageTag: 73eb6d58-9465-430c-a413-cc62784c68ba
+
+	measure 'Sedentarismo Minutos Dia Promedio' =
+			
+			DIVIDE(AVERAGE(adulto_limpio[TOTAL_MINUTOS_SEDENTARISMO_SEMANA]), 7)
+		lineageTag: a05df611-db5b-4640-b571-5ee23b9307d3
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Actv Fisica Minutos Dia Promedio' =
+			
+			DIVIDE(AVERAGE(adulto_limpio[TOTAL_MINUTOS_ACTV_FISICA_SEMANA]), 7)
+		lineageTag: f209c064-01a5-4079-a013-65e4cd5a7dda
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Sedentarismo Horas Dia Texto' =
+			
+			FORMAT(DIVIDE(AVERAGE(adulto_limpio[TOTAL_MINUTOS_SEDENTARISMO_SEMANA]), 420), "0.0") & " h/día"
+		lineageTag: 1df824b8-31ef-4873-bf6e-21149acb871a
+
+	measure 'Actv Fisica Horas Dia Texto' =
+			
+			FORMAT(DIVIDE(AVERAGE(adulto_limpio[TOTAL_MINUTOS_ACTV_FISICA_SEMANA]), 7), "0") & " min/día"
+		lineageTag: 4655386c-a259-41da-8d8b-ca2ec2a9c0d6
+
+	column IDCOMUNIDAD
+		dataType: int64
+		formatString: 0
+		lineageTag: a93986fc-5144-4a80-8235-6dc19c5def86
+		summarizeBy: none
+		sourceColumn: IDCOMUNIDAD
+
+		annotation SummarizationSetBy = Automatic
+
+	column SEXO
+		dataType: string
+		lineageTag: 1fde4691-7162-4d97-83b1-79c94cf3abcf
+		summarizeBy: none
+		sourceColumn: SEXO
+
+		annotation SummarizationSetBy = Automatic
+
+	column IDHOGAR
+		dataType: int64
+		formatString: 0
+		lineageTag: caa36e07-2caf-4529-b144-70e616412c1d
+		summarizeBy: sum
+		sourceColumn: IDHOGAR
+
+		annotation SummarizationSetBy = Automatic
+
+	column EDAD
+		dataType: int64
+		formatString: 0
+		lineageTag: 0a04d4d4-7ac7-4b4d-b33a-eec365d1aafe
+		summarizeBy: sum
+		sourceColumn: EDAD
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation __PBI_SemanticLinks = [{"LinkTarget":{"TableName":"adulto_limpio","TableItemName":"EDAD (bins)","ObjectType":4},"LinkType":"UsedInGroup"}]
+
+	column CLASE_SOCIAL_OCUPACION
+		dataType: int64
+		formatString: 0
+		lineageTag: d2bf4fb0-c1d5-43d6-9c54-36ac54feeacc
+		summarizeBy: sum
+		sourceColumn: CLASE_SOCIAL_OCUPACION
+
+		annotation SummarizationSetBy = Automatic
+
+	column ALTURA
+		dataType: int64
+		formatString: 0
+		lineageTag: 9c0da969-64e4-4330-ba4e-6d51466abd3c
+		summarizeBy: sum
+		sourceColumn: ALTURA
+
+		annotation SummarizationSetBy = Automatic
+
+	column PESO
+		dataType: int64
+		formatString: 0
+		lineageTag: 69e564fb-3e82-451d-8c3a-92f95f4a279f
+		summarizeBy: sum
+		sourceColumn: PESO
+
+		annotation SummarizationSetBy = Automatic
+
+	column IMC_INE
+		dataType: int64
+		formatString: 0
+		lineageTag: a47deb3e-7f98-4504-a836-ffa83ff23254
+		summarizeBy: sum
+		sourceColumn: IMC_INE
+
+		annotation SummarizationSetBy = Automatic
+
+	column IMC_CLINICO
+		dataType: double
+		formatString: 0.00
+		lineageTag: a768af7f-229f-4aa7-970c-7b7e17d2c1ed
+		summarizeBy: sum
+		sourceColumn: IMC_CLINICO
+
+		annotation SummarizationSetBy = Automatic
+
+	column DIAG_TENSION_ALTA
+		dataType: string
+		lineageTag: d500f7c2-77da-42aa-8c7e-3d01bb535dff
+		summarizeBy: none
+		sourceColumn: DIAG_TENSION_ALTA
+
+		annotation SummarizationSetBy = Automatic
+
+	column DIAG_ENFERMEDADES_CORAZON
+		dataType: string
+		lineageTag: 20778a67-074c-429b-a78e-b43c339bd00e
+		summarizeBy: none
+		sourceColumn: DIAG_ENFERMEDADES_CORAZON
+
+		annotation SummarizationSetBy = Automatic
+
+	column DIAG_DIABETES
+		dataType: string
+		lineageTag: 1ce0df90-b11f-46f0-9df7-ccc884f6d142
+		summarizeBy: none
+		sourceColumn: DIAG_DIABETES
+
+		annotation SummarizationSetBy = Automatic
+
+	column DIAG_ULCERAS
+		dataType: string
+		lineageTag: 55278e72-9838-4c89-ba49-baf50966a426
+		summarizeBy: none
+		sourceColumn: DIAG_ULCERAS
+
+		annotation SummarizationSetBy = Automatic
+
+	column DIAG_COLESTEROL
+		dataType: string
+		lineageTag: ffe93f2f-d1e5-41a2-a18b-e06896070f43
+		summarizeBy: none
+		sourceColumn: DIAG_COLESTEROL
+
+		annotation SummarizationSetBy = Automatic
+
+	column DIAG_ESTRENIMENTO
+		dataType: string
+		lineageTag: ad5959ed-b22b-49e2-ab48-c60c217593cf
+		summarizeBy: none
+		sourceColumn: DIAG_ESTRENIMENTO
+
+		annotation SummarizationSetBy = Automatic
+
+	column DIAG_CIRROSIS_DISF_HEPATICA
+		dataType: string
+		lineageTag: 96b94f8c-15f7-42cd-8619-2fb0ec0704ba
+		summarizeBy: none
+		sourceColumn: DIAG_CIRROSIS_DISF_HEPATICA
+
+		annotation SummarizationSetBy = Automatic
+
+	column DIAG_DEPRESION
+		dataType: string
+		lineageTag: 7d1c3878-d8e4-4fee-8423-085144766946
+		summarizeBy: none
+		sourceColumn: DIAG_DEPRESION
+
+		annotation SummarizationSetBy = Automatic
+
+	column DIAG_ANSIEDAD_CRONICA
+		dataType: string
+		lineageTag: 1896c7a6-a3b7-4001-b87f-acce4f94133a
+		summarizeBy: none
+		sourceColumn: DIAG_ANSIEDAD_CRONICA
+
+		annotation SummarizationSetBy = Automatic
+
+	column DIAG_OSTEOPOROSIS
+		dataType: string
+		lineageTag: 9c1f0389-ab8b-4d00-8095-a18cdd424754
+		summarizeBy: none
+		sourceColumn: DIAG_OSTEOPOROSIS
+
+		annotation SummarizationSetBy = Automatic
+
+	column DIAG_PROBLEMAS_TIROIDES
+		dataType: string
+		lineageTag: 53d39ae9-7d8a-4454-8c1d-a0cf65501022
+		summarizeBy: none
+		sourceColumn: DIAG_PROBLEMAS_TIROIDES
+
+		annotation SummarizationSetBy = Automatic
+
+	column DIAG_PROBLEMAS_RINON
+		dataType: string
+		lineageTag: c1e5c0f0-ff18-4b98-a676-ecdd2c93320f
+		summarizeBy: none
+		sourceColumn: DIAG_PROBLEMAS_RINON
+
+		annotation SummarizationSetBy = Automatic
+
+	column VIT_MIN_TON_CONSUMIDOS
+		dataType: string
+		lineageTag: b2ef86e5-3854-4069-bff0-6b27c1130775
+		summarizeBy: none
+		sourceColumn: VIT_MIN_TON_CONSUMIDOS
+
+		annotation SummarizationSetBy = Automatic
+
+	column VIT_MIN_TON_RECETADOS
+		dataType: string
+		lineageTag: d14f3564-8c40-4ee0-a2b4-a555234f05b9
+		summarizeBy: none
+		sourceColumn: VIT_MIN_TON_RECETADOS
+
+		annotation SummarizationSetBy = Automatic
+
+	column MED_CORAZON_CONSUMIDOS
+		dataType: string
+		lineageTag: 658ac08e-8f42-4881-a1a2-5a997530f339
+		summarizeBy: none
+		sourceColumn: MED_CORAZON_CONSUMIDOS
+
+		annotation SummarizationSetBy = Automatic
+
+	column MED_CORAZON_RECETADOS
+		dataType: string
+		lineageTag: c3662f00-30b5-4714-a994-b1ba045237d3
+		summarizeBy: none
+		sourceColumn: MED_CORAZON_RECETADOS
+
+		annotation SummarizationSetBy = Automatic
+
+	column MED_TENSION_CONSUMIDOS
+		dataType: string
+		lineageTag: c028dbff-965f-439c-bc95-836b819374aa
+		summarizeBy: none
+		sourceColumn: MED_TENSION_CONSUMIDOS
+
+		annotation SummarizationSetBy = Automatic
+
+	column MED_TENSION_RECETADOS
+		dataType: string
+		lineageTag: c9675ec9-395f-43b6-ab8b-ccbc58de13a5
+		summarizeBy: none
+		sourceColumn: MED_TENSION_RECETADOS
+
+		annotation SummarizationSetBy = Automatic
+
+	column MED_ESTOMAGO_DIGEST_CONSUMIDOS
+		dataType: string
+		lineageTag: eb76aa1c-399d-48e5-b10a-e1edc000c9fd
+		summarizeBy: none
+		sourceColumn: MED_ESTOMAGO_DIGEST_CONSUMIDOS
+
+		annotation SummarizationSetBy = Automatic
+
+	column MED_ESTOMAGO_DIGEST_RECETADOS
+		dataType: string
+		lineageTag: 22d06e36-5ea9-419a-98de-7c47f8d18f16
+		summarizeBy: none
+		sourceColumn: MED_ESTOMAGO_DIGEST_RECETADOS
+
+		annotation SummarizationSetBy = Automatic
+
+	column MED_DEPRESION_CONSUMIDOS
+		dataType: string
+		lineageTag: 5d2bfaec-0f98-47c9-8a8c-7f94502fc7b6
+		summarizeBy: none
+		sourceColumn: MED_DEPRESION_CONSUMIDOS
+
+		annotation SummarizationSetBy = Automatic
+
+	column MED_DEPRESION_RECETADOS
+		dataType: string
+		lineageTag: e3a1d2a4-870e-443b-a7c2-095a791c6196
+		summarizeBy: none
+		sourceColumn: MED_DEPRESION_RECETADOS
+
+		annotation SummarizationSetBy = Automatic
+
+	column MED_ADELGAZAR_CONSUMIDOS
+		dataType: string
+		lineageTag: 5ac4f722-04b0-4275-8c0e-63510cd0f79a
+		summarizeBy: none
+		sourceColumn: MED_ADELGAZAR_CONSUMIDOS
+
+		annotation SummarizationSetBy = Automatic
+
+	column MED_ADELGAZAR_RECETADOS
+		dataType: string
+		lineageTag: c459738b-5980-4d94-965b-f26cc7936d1d
+		summarizeBy: none
+		sourceColumn: MED_ADELGAZAR_RECETADOS
+
+		annotation SummarizationSetBy = Automatic
+
+	column MED_COLESTEROL_CONSUMIDOS
+		dataType: string
+		lineageTag: faec1133-69e7-4c56-9ce5-15fee1a62196
+		summarizeBy: none
+		sourceColumn: MED_COLESTEROL_CONSUMIDOS
+
+		annotation SummarizationSetBy = Automatic
+
+	column MED_COLESTEROL_RECETADOS
+		dataType: string
+		lineageTag: 2111075f-99cb-43a9-9b50-71b6252352e7
+		summarizeBy: none
+		sourceColumn: MED_COLESTEROL_RECETADOS
+
+		annotation SummarizationSetBy = Automatic
+
+	column MED_DIABETES_CONSUMIDOS
+		dataType: string
+		lineageTag: e7036c91-11e9-4f9c-ab9d-77a7de7beec8
+		summarizeBy: none
+		sourceColumn: MED_DIABETES_CONSUMIDOS
+
+		annotation SummarizationSetBy = Automatic
+
+	column MED_DIABETES_RECETADOS
+		dataType: string
+		lineageTag: 9e1199ee-1c90-49b5-86bb-fcb9f0847451
+		summarizeBy: none
+		sourceColumn: MED_DIABETES_RECETADOS
+
+		annotation SummarizationSetBy = Automatic
+
+	column PROD_NATURISTA_CONSUMIDOS
+		dataType: string
+		lineageTag: 733f164e-7f75-4112-9a04-1f4d838cdd12
+		summarizeBy: none
+		sourceColumn: PROD_NATURISTA_CONSUMIDOS
+
+		annotation SummarizationSetBy = Automatic
+
+	column PROD_NATURISTA_RECETADOS
+		dataType: string
+		lineageTag: 677bd3a7-a538-441e-8fa5-02fb17d7c405
+		summarizeBy: none
+		sourceColumn: PROD_NATURISTA_RECETADOS
+
+		annotation SummarizationSetBy = Automatic
+
+	column ACTV_FISICA_ACTV_PRINCIPAL
+		dataType: string
+		lineageTag: fcb86bbb-119e-4670-b0c6-4915f7ae9eb1
+		summarizeBy: none
+		sourceColumn: ACTV_FISICA_ACTV_PRINCIPAL
+
+		annotation SummarizationSetBy = Automatic
+
+	column FREC_ACTV_FISICA
+		dataType: string
+		lineageTag: a57167ad-55df-4108-bd6c-b43384876872
+		summarizeBy: none
+		sourceColumn: FREC_ACTV_FISICA
+
+		annotation SummarizationSetBy = Automatic
+
+	column DIAS_ACTV_FISICA
+		dataType: int64
+		formatString: 0
+		lineageTag: 66ee8eba-09a0-4133-abfb-19d1b2b10684
+		summarizeBy: sum
+		sourceColumn: DIAS_ACTV_FISICA
+
+		annotation SummarizationSetBy = Automatic
+
+	column HORAS_ACTV_FISICA_SEMANA
+		dataType: int64
+		formatString: 0
+		lineageTag: e01e2512-b2fe-475c-bc65-bbd0f2520396
+		summarizeBy: sum
+		sourceColumn: HORAS_ACTV_FISICA_SEMANA
+
+		annotation SummarizationSetBy = Automatic
+
+	column MINUTOS_ACTV_FISICA_SEMANA
+		dataType: int64
+		formatString: 0
+		lineageTag: ea1678ac-19a5-4ace-9066-921778e8d8d3
+		summarizeBy: sum
+		sourceColumn: MINUTOS_ACTV_FISICA_SEMANA
+
+		annotation SummarizationSetBy = Automatic
+
+	column TOTAL_MINUTOS_ACTV_FISICA_SEMANA
+		dataType: int64
+		formatString: 0
+		lineageTag: 37f9c535-81de-4580-b8b0-8674b255566e
+		summarizeBy: sum
+		sourceColumn: TOTAL_MINUTOS_ACTV_FISICA_SEMANA
+
+		annotation SummarizationSetBy = Automatic
+
+	column DIAS_ACTV_FISICA_MUSCULACION_SEMANA
+		dataType: int64
+		formatString: 0
+		lineageTag: 71a4a14e-0705-4817-8f53-31bb2ecd7281
+		summarizeBy: sum
+		sourceColumn: DIAS_ACTV_FISICA_MUSCULACION_SEMANA
+
+		annotation SummarizationSetBy = Automatic
+
+	column HORAS_SEDENTARISMO_DIA
+		dataType: int64
+		formatString: 0
+		lineageTag: 318f1cab-316c-4ade-8ed5-3e619cee23de
+		summarizeBy: sum
+		sourceColumn: HORAS_SEDENTARISMO_DIA
+
+		annotation SummarizationSetBy = Automatic
+
+	column MINUTOS_SEDENTARISMO_DIA
+		dataType: int64
+		formatString: 0
+		lineageTag: 160627ab-775b-4f59-b547-df631afb660b
+		summarizeBy: sum
+		sourceColumn: MINUTOS_SEDENTARISMO_DIA
+
+		annotation SummarizationSetBy = Automatic
+
+	column TOTAL_MINUTOS_SEDENTARISMO_DIA
+		dataType: int64
+		formatString: 0
+		lineageTag: d272f900-82ef-4236-ab0e-599f5b1a26b9
+		summarizeBy: sum
+		sourceColumn: TOTAL_MINUTOS_SEDENTARISMO_DIA
+
+		annotation SummarizationSetBy = Automatic
+
+	column TOTAL_MINUTOS_SEDENTARISMO_SEMANA
+		dataType: int64
+		formatString: 0
+		lineageTag: 0eb8921a-a2b7-4032-ba03-c4a6843a912f
+		summarizeBy: sum
+		sourceColumn: TOTAL_MINUTOS_SEDENTARISMO_SEMANA
+
+		annotation SummarizationSetBy = Automatic
+
+	column FREC_FRUTA_FRESCA_EXCLU_ZUMOS
+		dataType: string
+		lineageTag: 7904b229-e71a-4290-a41c-3973e2d8c6f7
+		summarizeBy: none
+		sourceColumn: FREC_FRUTA_FRESCA_EXCLU_ZUMOS
+
+		annotation SummarizationSetBy = Automatic
+
+	column CONSUM_FRUTA_FRESCA_EXCLU_ZUMOS
+		dataType: int64
+		formatString: 0
+		lineageTag: eb4cfdf9-7c99-49e9-a9e2-0021941d2b78
+		summarizeBy: sum
+		sourceColumn: CONSUM_FRUTA_FRESCA_EXCLU_ZUMOS
+
+		annotation SummarizationSetBy = Automatic
+
+	column FREC_CARNES
+		dataType: string
+		lineageTag: 2ad1f839-f138-49f1-b04a-628adf396a9f
+		summarizeBy: none
+		sourceColumn: FREC_CARNES
+
+		annotation SummarizationSetBy = Automatic
+
+	column FREC_HUEVOS
+		dataType: string
+		lineageTag: aa3346b5-9ff8-4fe3-bba7-bf09a13dc45f
+		summarizeBy: none
+		sourceColumn: FREC_HUEVOS
+
+		annotation SummarizationSetBy = Automatic
+
+	column FREC_PESCADOS
+		dataType: string
+		lineageTag: f843600d-5de0-42e3-ac66-3e76b1888c0b
+		summarizeBy: none
+		sourceColumn: FREC_PESCADOS
+
+		annotation SummarizationSetBy = Automatic
+
+	column FREC_PASTA_ARROZ_PATATAS
+		dataType: string
+		lineageTag: fe8eced9-c7fb-45d0-b78b-b3a0375a996d
+		summarizeBy: none
+		sourceColumn: FREC_PASTA_ARROZ_PATATAS
+
+		annotation SummarizationSetBy = Automatic
+
+	column FREC_PAN_CEREALES
+		dataType: string
+		lineageTag: a7210024-ca52-4b3b-afec-b18860ba68d2
+		summarizeBy: none
+		sourceColumn: FREC_PAN_CEREALES
+
+		annotation SummarizationSetBy = Automatic
+
+	column FREC_VERDURAS_ENSALADAS_HORTALIZAS
+		dataType: string
+		lineageTag: f23932b6-0818-4559-9248-cd37ca882809
+		summarizeBy: none
+		sourceColumn: FREC_VERDURAS_ENSALADAS_HORTALIZAS
+
+		annotation SummarizationSetBy = Automatic
+
+	column CONSUM_VERDURAS_ENSALADAS_HORTALIZAS
+		dataType: int64
+		formatString: 0
+		lineageTag: 467e4070-2e27-4944-8c76-38afea2b403f
+		summarizeBy: sum
+		sourceColumn: CONSUM_VERDURAS_ENSALADAS_HORTALIZAS
+
+		annotation SummarizationSetBy = Automatic
+
+	column FREC_LEGUMBRES
+		dataType: string
+		lineageTag: b6d14aa9-582f-43ec-b9f5-6b90a628d706
+		summarizeBy: none
+		sourceColumn: FREC_LEGUMBRES
+
+		annotation SummarizationSetBy = Automatic
+
+	column FREC_EMBUTIDOS_FIAMBRES
+		dataType: string
+		lineageTag: 552ae500-9927-46f6-ba90-7153a715d713
+		summarizeBy: none
+		sourceColumn: FREC_EMBUTIDOS_FIAMBRES
+
+		annotation SummarizationSetBy = Automatic
+
+	column FREC_LACTEOS_LECHE_QUESO_YOGUR
+		dataType: string
+		lineageTag: b8ba319f-e298-471a-9795-4a808f3de73c
+		summarizeBy: none
+		sourceColumn: FREC_LACTEOS_LECHE_QUESO_YOGUR
+
+		annotation SummarizationSetBy = Automatic
+
+	column FREC_DULCES_GALLETAS_BOLLERIAS
+		dataType: string
+		lineageTag: 21394891-fbf9-4e28-ba70-0f75fdb86971
+		summarizeBy: none
+		sourceColumn: FREC_DULCES_GALLETAS_BOLLERIAS
+
+		annotation SummarizationSetBy = Automatic
+
+	column FREC_REFRESCOS_AZUCAR
+		dataType: string
+		lineageTag: 074236dc-3a66-4fbb-8bf2-7f975d1967cc
+		summarizeBy: none
+		sourceColumn: FREC_REFRESCOS_AZUCAR
+
+		annotation SummarizationSetBy = Automatic
+
+	column FREC_COMIDA_RAPIDA_PIZZA_HAMBURGUESAS
+		dataType: string
+		lineageTag: 16aaceef-a617-4695-9888-f9006e1735ca
+		summarizeBy: none
+		sourceColumn: FREC_COMIDA_RAPIDA_PIZZA_HAMBURGUESAS
+
+		annotation SummarizationSetBy = Automatic
+
+	column FREC_APERITIVOS_COMIDAS_SALADAS
+		dataType: string
+		lineageTag: ce216a05-06b1-4328-b57d-0e22a1df72af
+		summarizeBy: none
+		sourceColumn: FREC_APERITIVOS_COMIDAS_SALADAS
+
+		annotation SummarizationSetBy = Automatic
+
+	column FREC_ZUMOS_NATURALES_FRUTAS_VERDURAS
+		dataType: string
+		lineageTag: 30237ff8-4c49-47b0-bcb5-be1ebf006c2f
+		summarizeBy: none
+		sourceColumn: FREC_ZUMOS_NATURALES_FRUTAS_VERDURAS
+
+		annotation SummarizationSetBy = Automatic
+
+	column CONSUM_ZUMOS_NATURALES_FRUTAS_VERDURAS
+		dataType: int64
+		formatString: 0
+		lineageTag: b3a61a88-fd70-4fb3-a83e-276596c2d861
+		summarizeBy: sum
+		sourceColumn: CONSUM_ZUMOS_NATURALES_FRUTAS_VERDURAS
+
+		annotation SummarizationSetBy = Automatic
+
+	column FREC_DIARIA_FRUTAS_ZUMOS_NATURALES
+		dataType: string
+		lineageTag: 8b4d8280-ef5b-4574-9f2f-6342e6990de0
+		summarizeBy: none
+		sourceColumn: FREC_DIARIA_FRUTAS_ZUMOS_NATURALES
+
+		annotation SummarizationSetBy = Automatic
+
+	column CONSUM_FRUTAS__ZUMOS_NATURALES_FRUTAS_VERDURAS
+		dataType: int64
+		formatString: 0
+		lineageTag: c7a10d4a-ef17-4e38-8878-185a6ef1ac2e
+		summarizeBy: sum
+		sourceColumn: CONSUM_FRUTAS__ZUMOS_NATURALES_FRUTAS_VERDURAS
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'COMUNIDAD AUTONOMA'
+		dataType: string
+		lineageTag: 6ce5aa27-ad5e-4521-8d22-5a9c3a61f530
+		dataCategory: StateOrProvince
+		summarizeBy: none
+		sourceColumn: COMUNIDAD AUTONOMA
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Clase Social por Ocupación.Descripción'
+		dataType: string
+		lineageTag: 25549247-9f84-48cb-abe0-c31a0529448c
+		summarizeBy: none
+		sourceColumn: Clase Social por Ocupación.Descripción
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Estado Nutricional INE'
+		dataType: string
+		lineageTag: b74a00a0-5405-4f48-adb9-59059df3be8b
+		summarizeBy: none
+		sourceColumn: Estado Nutricional INE
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Tipo de Activ Fisica Activ Principal.Descripción'
+		dataType: string
+		lineageTag: 87aca3bc-8e14-4507-b144-32c62801e654
+		summarizeBy: none
+		sourceColumn: Tipo de Activ Fisica Activ Principal.Descripción
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Frecuencia Activ Fisica'
+		dataType: string
+		lineageTag: 602152bf-2d9b-4aef-9e73-5782671d7754
+		summarizeBy: none
+		sourceColumn: Frecuencia Activ Fisica
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'EDAD (bins)' =
+			IF(
+				ISBLANK('adulto_limpio'[EDAD]),
+				BLANK(),
+				INT('adulto_limpio'[EDAD] / 10) * 10
+			)
+		formatString: 0
+		lineageTag: 62d2d3ab-c065-41e7-8df1-d3e791d8be16
+		summarizeBy: none
+
+		extendedProperty GroupingMetadata =
+				{
+				  "version": 0,
+				  "groupedColumns": [
+				    {
+				      "Column": {
+				        "Expression": {
+				          "SourceRef": {
+				            "Entity": "adulto_limpio"
+				          }
+				        },
+				        "Property": "EDAD"
+				      }
+				    }
+				  ],
+				  "binningMetadata": {
+				    "binSize": {
+				      "value": 10.0,
+				      "unit": 0
+				    }
+				  }
+				}
+
+		annotation GroupingDesignState = {"Version":0,"Sources":[{"Name":"a","Entity":"adulto_limpio"}],"GroupedColumns":[{"Column":{"Expression":{"SourceRef":{"Source":"a"}},"Property":"EDAD"}}],"BinItem":{"Expression":{"Floor":{"Expression":{"Column":{"Expression":{"SourceRef":{"Source":"a"}},"Property":"EDAD"}},"Size":10.0}}}}
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Grupo Etario' =
+			
+			SWITCH(TRUE(),
+			    adulto_limpio[EDAD] >= 18 && adulto_limpio[EDAD] <= 34, "18-34",
+			    adulto_limpio[EDAD] >= 35 && adulto_limpio[EDAD] <= 49, "35-49",
+			    adulto_limpio[EDAD] >= 50 && adulto_limpio[EDAD] <= 64, "50-64",
+			    adulto_limpio[EDAD] >= 65, "65+",
+			    BLANK()
+			)
+		lineageTag: 657dc77d-6a75-4f26-b4ab-d4d3564e6192
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	partition adulto_limpio = m
+		mode: import
+		source =
+				let
+				    Source = Odbc.DataSource("dsn=NutriData_INE", [HierarchicalNavigation=true]),
+				    adulto_limpio_View = Source{[Name="adulto_limpio",Kind="View"]}[Data],
+				    #"Changed Type" = Table.TransformColumnTypes(adulto_limpio_View,{{"IDCOMUNIDAD", Int64.Type}, {"SEXO", Int64.Type}, {"IDHOGAR", Int64.Type}, {"EDAD", Int64.Type}, {"CLASE_SOCIAL_OCUPACION", Int64.Type}, {"ALTURA", Int64.Type}, {"PESO", Int64.Type}, {"IMC_INE", Int64.Type}, {"IMC_CLINICO", type number}, {"DIAG_TENSION_ALTA", Int64.Type}, {"DIAG_ENFERMEDADES_CORAZON", Int64.Type}, {"DIAG_DIABETES", Int64.Type}, {"DIAG_ULCERAS", type text}, {"DIAG_COLESTEROL", Int64.Type}, {"DIAG_ESTRENIMENTO", Int64.Type}, {"DIAG_CIRROSIS_DISF_HEPATICA", type text}, {"DIAG_DEPRESION", Int64.Type}, {"DIAG_ANSIEDAD_CRONICA", Int64.Type}, {"DIAG_OSTEOPOROSIS", Int64.Type}, {"DIAG_PROBLEMAS_TIROIDES", Int64.Type}, {"DIAG_PROBLEMAS_RINON", Int64.Type}, {"VIT_MIN_TON_CONSUMIDOS", Int64.Type}, {"VIT_MIN_TON_RECETADOS", Int64.Type}, {"MED_CORAZON_CONSUMIDOS", Int64.Type}, {"MED_CORAZON_RECETADOS", Int64.Type}, {"MED_TENSION_CONSUMIDOS", Int64.Type}, {"MED_TENSION_RECETADOS", Int64.Type}, {"MED_ESTOMAGO_DIGEST_CONSUMIDOS", Int64.Type}, {"MED_ESTOMAGO_DIGEST_RECETADOS", Int64.Type}, {"MED_DEPRESION_CONSUMIDOS", Int64.Type}, {"MED_DEPRESION_RECETADOS", Int64.Type}, {"MED_ADELGAZAR_CONSUMIDOS", Int64.Type}, {"MED_ADELGAZAR_RECETADOS", type text}, {"MED_COLESTEROL_CONSUMIDOS", Int64.Type}, {"MED_COLESTEROL_RECETADOS", Int64.Type}, {"MED_DIABETES_CONSUMIDOS", Int64.Type}, {"MED_DIABETES_RECETADOS", Int64.Type}, {"PROD_NATURISTA_CONSUMIDOS", Int64.Type}, {"PROD_NATURISTA_RECETADOS", Int64.Type}, {"ACTV_FISICA_ACTV_PRINCIPAL", Int64.Type}, {"FREC_ACTV_FISICA", Int64.Type}, {"DIAS_ACTV_FISICA", Int64.Type}, {"HORAS_ACTV_FISICA_SEMANA", Int64.Type}, {"MINUTOS_ACTV_FISICA_SEMANA", Int64.Type}, {"TOTAL_MINUTOS_ACTV_FISICA_SEMANA", Int64.Type}, {"DIAS_ACTV_FISICA_MUSCULACION_SEMANA", Int64.Type}, {"HORAS_SEDENTARISMO_DIA", Int64.Type}, {"MINUTOS_SEDENTARISMO_DIA", Int64.Type}, {"TOTAL_MINUTOS_SEDENTARISMO_DIA", Int64.Type}, {"TOTAL_MINUTOS_SEDENTARISMO_SEMANA", Int64.Type}, {"FREC_FRUTA_FRESCA_EXCLU_ZUMOS", Int64.Type}, {"CONSUM_FRUTA_FRESCA_EXCLU_ZUMOS", Int64.Type}, {"FREC_CARNES", Int64.Type}, {"FREC_HUEVOS", Int64.Type}, {"FREC_PESCADOS", Int64.Type}, {"FREC_PASTA_ARROZ_PATATAS", Int64.Type}, {"FREC_PAN_CEREALES", Int64.Type}, {"FREC_VERDURAS_ENSALADAS_HORTALIZAS", Int64.Type}, {"CONSUM_VERDURAS_ENSALADAS_HORTALIZAS", Int64.Type}, {"FREC_LEGUMBRES", Int64.Type}, {"FREC_EMBUTIDOS_FIAMBRES", Int64.Type}, {"FREC_LACTEOS_LECHE_QUESO_YOGUR", Int64.Type}, {"FREC_DULCES_GALLETAS_BOLLERIAS", Int64.Type}, {"FREC_REFRESCOS_AZUCAR", Int64.Type}, {"FREC_COMIDA_RAPIDA_PIZZA_HAMBURGUESAS", Int64.Type}, {"FREC_APERITIVOS_COMIDAS_SALADAS", Int64.Type}, {"FREC_ZUMOS_NATURALES_FRUTAS_VERDURAS", Int64.Type}, {"CONSUM_ZUMOS_NATURALES_FRUTAS_VERDURAS", Int64.Type}, {"FREC_DIARIA_FRUTAS_ZUMOS_NATURALES", type text}, {"CONSUM_FRUTAS__ZUMOS_NATURALES_FRUTAS_VERDURAS", type text}}),
+				    #"Rounded Off" = Table.TransformColumns(#"Changed Type",{{"IMC_CLINICO", each Number.Round(_, 2), type number}}),
+				    #"Merged Queries" = Table.NestedJoin(#"Rounded Off", {"IDCOMUNIDAD"}, #"CCAA Diccionario", {"Código "}, "CCAA Diccionario", JoinKind.LeftOuter),
+				    #"Expanded CCAA Diccionario" = Table.ExpandTableColumn(#"Merged Queries", "CCAA Diccionario", {"Descripción"}, {"Descripción"}),
+				    #"Reordered Columns" = Table.ReorderColumns(#"Expanded CCAA Diccionario",{"IDCOMUNIDAD", "Descripción", "SEXO", "IDHOGAR", "EDAD", "CLASE_SOCIAL_OCUPACION", "ALTURA", "PESO", "IMC_INE", "IMC_CLINICO", "DIAG_TENSION_ALTA", "DIAG_ENFERMEDADES_CORAZON", "DIAG_DIABETES", "DIAG_ULCERAS", "DIAG_COLESTEROL", "DIAG_ESTRENIMENTO", "DIAG_CIRROSIS_DISF_HEPATICA", "DIAG_DEPRESION", "DIAG_ANSIEDAD_CRONICA", "DIAG_OSTEOPOROSIS", "DIAG_PROBLEMAS_TIROIDES", "DIAG_PROBLEMAS_RINON", "VIT_MIN_TON_CONSUMIDOS", "VIT_MIN_TON_RECETADOS", "MED_CORAZON_CONSUMIDOS", "MED_CORAZON_RECETADOS", "MED_TENSION_CONSUMIDOS", "MED_TENSION_RECETADOS", "MED_ESTOMAGO_DIGEST_CONSUMIDOS", "MED_ESTOMAGO_DIGEST_RECETADOS", "MED_DEPRESION_CONSUMIDOS", "MED_DEPRESION_RECETADOS", "MED_ADELGAZAR_CONSUMIDOS", "MED_ADELGAZAR_RECETADOS", "MED_COLESTEROL_CONSUMIDOS", "MED_COLESTEROL_RECETADOS", "MED_DIABETES_CONSUMIDOS", "MED_DIABETES_RECETADOS", "PROD_NATURISTA_CONSUMIDOS", "PROD_NATURISTA_RECETADOS", "ACTV_FISICA_ACTV_PRINCIPAL", "FREC_ACTV_FISICA", "DIAS_ACTV_FISICA", "HORAS_ACTV_FISICA_SEMANA", "MINUTOS_ACTV_FISICA_SEMANA", "TOTAL_MINUTOS_ACTV_FISICA_SEMANA", "DIAS_ACTV_FISICA_MUSCULACION_SEMANA", "HORAS_SEDENTARISMO_DIA", "MINUTOS_SEDENTARISMO_DIA", "TOTAL_MINUTOS_SEDENTARISMO_DIA", "TOTAL_MINUTOS_SEDENTARISMO_SEMANA", "FREC_FRUTA_FRESCA_EXCLU_ZUMOS", "CONSUM_FRUTA_FRESCA_EXCLU_ZUMOS", "FREC_CARNES", "FREC_HUEVOS", "FREC_PESCADOS", "FREC_PASTA_ARROZ_PATATAS", "FREC_PAN_CEREALES", "FREC_VERDURAS_ENSALADAS_HORTALIZAS", "CONSUM_VERDURAS_ENSALADAS_HORTALIZAS", "FREC_LEGUMBRES", "FREC_EMBUTIDOS_FIAMBRES", "FREC_LACTEOS_LECHE_QUESO_YOGUR", "FREC_DULCES_GALLETAS_BOLLERIAS", "FREC_REFRESCOS_AZUCAR", "FREC_COMIDA_RAPIDA_PIZZA_HAMBURGUESAS", "FREC_APERITIVOS_COMIDAS_SALADAS", "FREC_ZUMOS_NATURALES_FRUTAS_VERDURAS", "CONSUM_ZUMOS_NATURALES_FRUTAS_VERDURAS", "FREC_DIARIA_FRUTAS_ZUMOS_NATURALES", "CONSUM_FRUTAS__ZUMOS_NATURALES_FRUTAS_VERDURAS"}),
+				    #"Renamed Columns" = Table.RenameColumns(#"Reordered Columns",{{"Descripción", "COMUNIDAD AUTONOMA"}}),
+				    #"Changed Type with Locale" = Table.TransformColumnTypes(#"Renamed Columns", {{"SEXO", type text}}, "en-US"),
+				    #"Replaced Value" = Table.ReplaceValue(#"Changed Type with Locale","1","Hombre",Replacer.ReplaceText,{"SEXO"}),
+				    #"Replaced Value1" = Table.ReplaceValue(#"Replaced Value","2","Mujer",Replacer.ReplaceText,{"SEXO"}),
+				    #"Changed Type with Locale1" = Table.TransformColumnTypes(#"Replaced Value1", {{"IDHOGAR", Int64.Type}}, "en-US"),
+				    #"Changed Type with Locale2" = Table.TransformColumnTypes(#"Changed Type with Locale1", {{"COMUNIDAD AUTONOMA", type text}}, "en-US"),
+				    #"Changed Type with Locale3" = Table.TransformColumnTypes(#"Changed Type with Locale2", {{"EDAD", Int64.Type}}, "en-US"),
+				    #"Changed Type with Locale4" = Table.TransformColumnTypes(#"Changed Type with Locale3", {{"CLASE_SOCIAL_OCUPACION", Int64.Type}}, "en-US"),
+				    #"Merged Queries1" = Table.NestedJoin(#"Changed Type with Locale4", {"CLASE_SOCIAL_OCUPACION"}, #"Clase Social por Ocupación", {"Código "}, "Clase Social por Ocupación", JoinKind.LeftOuter),
+				    #"Expanded Clase Social por Ocupación" = Table.ExpandTableColumn(#"Merged Queries1", "Clase Social por Ocupación", {"Descripción"}, {"Clase Social por Ocupación.Descripción"}),
+				    #"Reordered Columns1" = Table.ReorderColumns(#"Expanded Clase Social por Ocupación",{"IDCOMUNIDAD", "COMUNIDAD AUTONOMA", "SEXO", "IDHOGAR", "EDAD", "CLASE_SOCIAL_OCUPACION", "Clase Social por Ocupación.Descripción", "ALTURA", "PESO", "IMC_INE", "IMC_CLINICO", "DIAG_TENSION_ALTA", "DIAG_ENFERMEDADES_CORAZON", "DIAG_DIABETES", "DIAG_ULCERAS", "DIAG_COLESTEROL", "DIAG_ESTRENIMENTO", "DIAG_CIRROSIS_DISF_HEPATICA", "DIAG_DEPRESION", "DIAG_ANSIEDAD_CRONICA", "DIAG_OSTEOPOROSIS", "DIAG_PROBLEMAS_TIROIDES", "DIAG_PROBLEMAS_RINON", "VIT_MIN_TON_CONSUMIDOS", "VIT_MIN_TON_RECETADOS", "MED_CORAZON_CONSUMIDOS", "MED_CORAZON_RECETADOS", "MED_TENSION_CONSUMIDOS", "MED_TENSION_RECETADOS", "MED_ESTOMAGO_DIGEST_CONSUMIDOS", "MED_ESTOMAGO_DIGEST_RECETADOS", "MED_DEPRESION_CONSUMIDOS", "MED_DEPRESION_RECETADOS", "MED_ADELGAZAR_CONSUMIDOS", "MED_ADELGAZAR_RECETADOS", "MED_COLESTEROL_CONSUMIDOS", "MED_COLESTEROL_RECETADOS", "MED_DIABETES_CONSUMIDOS", "MED_DIABETES_RECETADOS", "PROD_NATURISTA_CONSUMIDOS", "PROD_NATURISTA_RECETADOS", "ACTV_FISICA_ACTV_PRINCIPAL", "FREC_ACTV_FISICA", "DIAS_ACTV_FISICA", "HORAS_ACTV_FISICA_SEMANA", "MINUTOS_ACTV_FISICA_SEMANA", "TOTAL_MINUTOS_ACTV_FISICA_SEMANA", "DIAS_ACTV_FISICA_MUSCULACION_SEMANA", "HORAS_SEDENTARISMO_DIA", "MINUTOS_SEDENTARISMO_DIA", "TOTAL_MINUTOS_SEDENTARISMO_DIA", "TOTAL_MINUTOS_SEDENTARISMO_SEMANA", "FREC_FRUTA_FRESCA_EXCLU_ZUMOS", "CONSUM_FRUTA_FRESCA_EXCLU_ZUMOS", "FREC_CARNES", "FREC_HUEVOS", "FREC_PESCADOS", "FREC_PASTA_ARROZ_PATATAS", "FREC_PAN_CEREALES", "FREC_VERDURAS_ENSALADAS_HORTALIZAS", "CONSUM_VERDURAS_ENSALADAS_HORTALIZAS", "FREC_LEGUMBRES", "FREC_EMBUTIDOS_FIAMBRES", "FREC_LACTEOS_LECHE_QUESO_YOGUR", "FREC_DULCES_GALLETAS_BOLLERIAS", "FREC_REFRESCOS_AZUCAR", "FREC_COMIDA_RAPIDA_PIZZA_HAMBURGUESAS", "FREC_APERITIVOS_COMIDAS_SALADAS", "FREC_ZUMOS_NATURALES_FRUTAS_VERDURAS", "CONSUM_ZUMOS_NATURALES_FRUTAS_VERDURAS", "FREC_DIARIA_FRUTAS_ZUMOS_NATURALES", "CONSUM_FRUTAS__ZUMOS_NATURALES_FRUTAS_VERDURAS"}),
+				    #"Changed Type with Locale5" = Table.TransformColumnTypes(#"Reordered Columns1", {{"ALTURA", Int64.Type}}, "en-US"),
+				    #"Changed Type with Locale6" = Table.TransformColumnTypes(#"Changed Type with Locale5", {{"PESO", Int64.Type}}, "en-US"),
+				    #"Changed Type with Locale7" = Table.TransformColumnTypes(#"Changed Type with Locale6", {{"IMC_INE", Int64.Type}}, "en-US"),
+				    #"Merged Queries2" = Table.NestedJoin(#"Changed Type with Locale7", {"IMC_INE"}, #"Estado Nutricional INE", {"Código "}, "Estado Nutricional INE", JoinKind.LeftOuter),
+				    #"Expanded Estado Nutricional INE" = Table.ExpandTableColumn(#"Merged Queries2", "Estado Nutricional INE", {"Descripción"}, {"Descripción"}),
+				    #"Renamed Columns1" = Table.RenameColumns(#"Expanded Estado Nutricional INE",{{"Descripción", "Estado Nutricional INE"}}),
+				    #"Reordered Columns2" = Table.ReorderColumns(#"Renamed Columns1",{"IDCOMUNIDAD", "COMUNIDAD AUTONOMA", "SEXO", "IDHOGAR", "EDAD", "CLASE_SOCIAL_OCUPACION", "Clase Social por Ocupación.Descripción", "ALTURA", "PESO", "IMC_INE", "Estado Nutricional INE", "IMC_CLINICO", "DIAG_TENSION_ALTA", "DIAG_ENFERMEDADES_CORAZON", "DIAG_DIABETES", "DIAG_ULCERAS", "DIAG_COLESTEROL", "DIAG_ESTRENIMENTO", "DIAG_CIRROSIS_DISF_HEPATICA", "DIAG_DEPRESION", "DIAG_ANSIEDAD_CRONICA", "DIAG_OSTEOPOROSIS", "DIAG_PROBLEMAS_TIROIDES", "DIAG_PROBLEMAS_RINON", "VIT_MIN_TON_CONSUMIDOS", "VIT_MIN_TON_RECETADOS", "MED_CORAZON_CONSUMIDOS", "MED_CORAZON_RECETADOS", "MED_TENSION_CONSUMIDOS", "MED_TENSION_RECETADOS", "MED_ESTOMAGO_DIGEST_CONSUMIDOS", "MED_ESTOMAGO_DIGEST_RECETADOS", "MED_DEPRESION_CONSUMIDOS", "MED_DEPRESION_RECETADOS", "MED_ADELGAZAR_CONSUMIDOS", "MED_ADELGAZAR_RECETADOS", "MED_COLESTEROL_CONSUMIDOS", "MED_COLESTEROL_RECETADOS", "MED_DIABETES_CONSUMIDOS", "MED_DIABETES_RECETADOS", "PROD_NATURISTA_CONSUMIDOS", "PROD_NATURISTA_RECETADOS", "ACTV_FISICA_ACTV_PRINCIPAL", "FREC_ACTV_FISICA", "DIAS_ACTV_FISICA", "HORAS_ACTV_FISICA_SEMANA", "MINUTOS_ACTV_FISICA_SEMANA", "TOTAL_MINUTOS_ACTV_FISICA_SEMANA", "DIAS_ACTV_FISICA_MUSCULACION_SEMANA", "HORAS_SEDENTARISMO_DIA", "MINUTOS_SEDENTARISMO_DIA", "TOTAL_MINUTOS_SEDENTARISMO_DIA", "TOTAL_MINUTOS_SEDENTARISMO_SEMANA", "FREC_FRUTA_FRESCA_EXCLU_ZUMOS", "CONSUM_FRUTA_FRESCA_EXCLU_ZUMOS", "FREC_CARNES", "FREC_HUEVOS", "FREC_PESCADOS", "FREC_PASTA_ARROZ_PATATAS", "FREC_PAN_CEREALES", "FREC_VERDURAS_ENSALADAS_HORTALIZAS", "CONSUM_VERDURAS_ENSALADAS_HORTALIZAS", "FREC_LEGUMBRES", "FREC_EMBUTIDOS_FIAMBRES", "FREC_LACTEOS_LECHE_QUESO_YOGUR", "FREC_DULCES_GALLETAS_BOLLERIAS", "FREC_REFRESCOS_AZUCAR", "FREC_COMIDA_RAPIDA_PIZZA_HAMBURGUESAS", "FREC_APERITIVOS_COMIDAS_SALADAS", "FREC_ZUMOS_NATURALES_FRUTAS_VERDURAS", "CONSUM_ZUMOS_NATURALES_FRUTAS_VERDURAS", "FREC_DIARIA_FRUTAS_ZUMOS_NATURALES", "CONSUM_FRUTAS__ZUMOS_NATURALES_FRUTAS_VERDURAS"}),
+				    #"Changed Type with Locale8" = Table.TransformColumnTypes(#"Reordered Columns2", {{"IMC_CLINICO", type number}}, "en-US"),
+				    #"Changed Type with Locale9" = Table.TransformColumnTypes(#"Changed Type with Locale8", {{"DIAG_TENSION_ALTA", type text}}, "en-US"),
+				    #"Changed Type with Locale10" = Table.TransformColumnTypes(#"Changed Type with Locale9", {{"DIAG_ENFERMEDADES_CORAZON", type text}}, "en-US"),
+				    #"Changed Type with Locale11" = Table.TransformColumnTypes(#"Changed Type with Locale10", {{"DIAG_DIABETES", type text}}, "en-US"),
+				    #"Changed Type with Locale12" = Table.TransformColumnTypes(#"Changed Type with Locale11", {{"DIAG_ULCERAS", type text}}, "en-US"),
+				    #"Changed Type1" = Table.TransformColumnTypes(#"Changed Type with Locale12",{{"DIAG_ULCERAS", Int64.Type}}),
+				    #"Changed Type with Locale13" = Table.TransformColumnTypes(#"Changed Type1", {{"DIAG_ULCERAS", type text}}, "en-US"),
+				    #"Changed Type with Locale14" = Table.TransformColumnTypes(#"Changed Type with Locale13", {{"DIAG_COLESTEROL", type text}}, "en-US"),
+				    #"Changed Type with Locale15" = Table.TransformColumnTypes(#"Changed Type with Locale14", {{"DIAG_ESTRENIMENTO", type text}}, "en-US"),
+				    #"Changed Type2" = Table.TransformColumnTypes(#"Changed Type with Locale15",{{"DIAG_CIRROSIS_DISF_HEPATICA", Int64.Type}}),
+				    #"Changed Type with Locale16" = Table.TransformColumnTypes(#"Changed Type2", {{"DIAG_CIRROSIS_DISF_HEPATICA", type text}}, "en-US"),
+				    #"Changed Type with Locale17" = Table.TransformColumnTypes(#"Changed Type with Locale16", {{"DIAG_DEPRESION", type text}}, "en-US"),
+				    #"Changed Type with Locale18" = Table.TransformColumnTypes(#"Changed Type with Locale17", {{"DIAG_ANSIEDAD_CRONICA", type text}}, "en-US"),
+				    #"Changed Type with Locale19" = Table.TransformColumnTypes(#"Changed Type with Locale18", {{"DIAG_OSTEOPOROSIS", type text}}, "en-US"),
+				    #"Changed Type with Locale20" = Table.TransformColumnTypes(#"Changed Type with Locale19", {{"DIAG_PROBLEMAS_TIROIDES", type text}}, "en-US"),
+				    #"Changed Type with Locale21" = Table.TransformColumnTypes(#"Changed Type with Locale20", {{"DIAG_PROBLEMAS_RINON", type text}}, "en-US"),
+				    #"Replaced Value2" = Table.ReplaceValue(#"Changed Type with Locale21","1","Si",Replacer.ReplaceText,{"DIAG_TENSION_ALTA", "DIAG_ENFERMEDADES_CORAZON", "DIAG_DIABETES", "DIAG_ULCERAS", "DIAG_COLESTEROL", "DIAG_ESTRENIMENTO", "DIAG_CIRROSIS_DISF_HEPATICA", "DIAG_DEPRESION", "DIAG_ANSIEDAD_CRONICA", "DIAG_OSTEOPOROSIS", "DIAG_PROBLEMAS_TIROIDES", "DIAG_PROBLEMAS_RINON"}),
+				    #"Replaced Value3" = Table.ReplaceValue(#"Replaced Value2","2","No",Replacer.ReplaceText,{"DIAG_TENSION_ALTA", "DIAG_ENFERMEDADES_CORAZON", "DIAG_DIABETES", "DIAG_ULCERAS", "DIAG_COLESTEROL", "DIAG_ESTRENIMENTO", "DIAG_CIRROSIS_DISF_HEPATICA", "DIAG_DEPRESION", "DIAG_ANSIEDAD_CRONICA", "DIAG_OSTEOPOROSIS", "DIAG_PROBLEMAS_TIROIDES", "DIAG_PROBLEMAS_RINON"}),
+				    #"Replaced Value4" = Table.ReplaceValue(#"Replaced Value3",null,"No",Replacer.ReplaceValue,{"DIAG_TENSION_ALTA", "DIAG_ENFERMEDADES_CORAZON", "DIAG_DIABETES", "DIAG_ULCERAS", "DIAG_COLESTEROL", "DIAG_ESTRENIMENTO", "DIAG_CIRROSIS_DISF_HEPATICA", "DIAG_DEPRESION", "DIAG_ANSIEDAD_CRONICA", "DIAG_OSTEOPOROSIS", "DIAG_PROBLEMAS_TIROIDES", "DIAG_PROBLEMAS_RINON"}),
+				    #"Changed Type with Locale22" = Table.TransformColumnTypes(#"Replaced Value4", {{"VIT_MIN_TON_CONSUMIDOS", type text}}, "en-US"),
+				    #"Changed Type with Locale23" = Table.TransformColumnTypes(#"Changed Type with Locale22", {{"VIT_MIN_TON_RECETADOS", type text}}, "en-US"),
+				    #"Changed Type with Locale24" = Table.TransformColumnTypes(#"Changed Type with Locale23", {{"MED_CORAZON_CONSUMIDOS", type text}}, "en-US"),
+				    #"Changed Type with Locale25" = Table.TransformColumnTypes(#"Changed Type with Locale24", {{"MED_CORAZON_RECETADOS", type text}}, "en-US"),
+				    #"Changed Type with Locale26" = Table.TransformColumnTypes(#"Changed Type with Locale25", {{"MED_TENSION_CONSUMIDOS", type text}}, "en-US"),
+				    #"Changed Type with Locale27" = Table.TransformColumnTypes(#"Changed Type with Locale26", {{"MED_TENSION_RECETADOS", type text}}, "en-US"),
+				    #"Changed Type with Locale28" = Table.TransformColumnTypes(#"Changed Type with Locale27", {{"MED_ESTOMAGO_DIGEST_CONSUMIDOS", type text}}, "en-US"),
+				    #"Changed Type with Locale29" = Table.TransformColumnTypes(#"Changed Type with Locale28", {{"MED_ESTOMAGO_DIGEST_RECETADOS", type text}}, "en-US"),
+				    #"Changed Type with Locale30" = Table.TransformColumnTypes(#"Changed Type with Locale29", {{"MED_DEPRESION_CONSUMIDOS", type text}}, "en-US"),
+				    #"Changed Type with Locale31" = Table.TransformColumnTypes(#"Changed Type with Locale30", {{"MED_DEPRESION_RECETADOS", type text}}, "en-US"),
+				    #"Changed Type with Locale32" = Table.TransformColumnTypes(#"Changed Type with Locale31", {{"MED_ADELGAZAR_CONSUMIDOS", type text}}, "en-US"),
+				    #"Changed Type with Locale33" = Table.TransformColumnTypes(#"Changed Type with Locale32", {{"MED_ADELGAZAR_RECETADOS", type text}}, "en-US"),
+				    #"Changed Type with Locale34" = Table.TransformColumnTypes(#"Changed Type with Locale33", {{"MED_COLESTEROL_CONSUMIDOS", type text}}, "en-US"),
+				    #"Changed Type with Locale35" = Table.TransformColumnTypes(#"Changed Type with Locale34", {{"MED_COLESTEROL_RECETADOS", type text}}, "en-US"),
+				    #"Changed Type with Locale36" = Table.TransformColumnTypes(#"Changed Type with Locale35", {{"MED_DIABETES_CONSUMIDOS", type text}}, "en-US"),
+				    #"Changed Type with Locale37" = Table.TransformColumnTypes(#"Changed Type with Locale36", {{"MED_DIABETES_RECETADOS", type text}}, "en-US"),
+				    #"Changed Type with Locale38" = Table.TransformColumnTypes(#"Changed Type with Locale37", {{"PROD_NATURISTA_CONSUMIDOS", type text}}, "en-US"),
+				    #"Changed Type with Locale39" = Table.TransformColumnTypes(#"Changed Type with Locale38", {{"PROD_NATURISTA_RECETADOS", type text}}, "en-US"),
+				    #"Replaced Value5" = Table.ReplaceValue(#"Changed Type with Locale39","1","Si",Replacer.ReplaceText,{"VIT_MIN_TON_CONSUMIDOS", "VIT_MIN_TON_RECETADOS", "MED_CORAZON_CONSUMIDOS", "MED_CORAZON_RECETADOS", "MED_TENSION_CONSUMIDOS", "MED_TENSION_RECETADOS", "MED_ESTOMAGO_DIGEST_CONSUMIDOS", "MED_ESTOMAGO_DIGEST_RECETADOS", "MED_DEPRESION_CONSUMIDOS", "MED_DEPRESION_RECETADOS", "MED_ADELGAZAR_CONSUMIDOS", "MED_ADELGAZAR_RECETADOS", "MED_COLESTEROL_CONSUMIDOS", "MED_COLESTEROL_RECETADOS", "MED_DIABETES_CONSUMIDOS", "MED_DIABETES_RECETADOS", "PROD_NATURISTA_CONSUMIDOS", "PROD_NATURISTA_RECETADOS"}),
+				    #"Replaced Value6" = Table.ReplaceValue(#"Replaced Value5","2","No",Replacer.ReplaceText,{"VIT_MIN_TON_CONSUMIDOS", "VIT_MIN_TON_RECETADOS", "MED_CORAZON_CONSUMIDOS", "MED_CORAZON_RECETADOS", "MED_TENSION_CONSUMIDOS", "MED_TENSION_RECETADOS", "MED_ESTOMAGO_DIGEST_CONSUMIDOS", "MED_ESTOMAGO_DIGEST_RECETADOS", "MED_DEPRESION_CONSUMIDOS", "MED_DEPRESION_RECETADOS", "MED_ADELGAZAR_CONSUMIDOS", "MED_ADELGAZAR_RECETADOS", "MED_COLESTEROL_CONSUMIDOS", "MED_COLESTEROL_RECETADOS", "MED_DIABETES_CONSUMIDOS", "MED_DIABETES_RECETADOS", "PROD_NATURISTA_CONSUMIDOS", "PROD_NATURISTA_RECETADOS"}),
+				    #"Replaced Value7" = Table.ReplaceValue(#"Replaced Value6",null,"No",Replacer.ReplaceValue,{"VIT_MIN_TON_CONSUMIDOS", "VIT_MIN_TON_RECETADOS", "MED_CORAZON_CONSUMIDOS", "MED_CORAZON_RECETADOS", "MED_TENSION_CONSUMIDOS", "MED_TENSION_RECETADOS", "MED_ESTOMAGO_DIGEST_CONSUMIDOS", "MED_ESTOMAGO_DIGEST_RECETADOS", "MED_DEPRESION_CONSUMIDOS", "MED_DEPRESION_RECETADOS", "MED_ADELGAZAR_CONSUMIDOS", "MED_ADELGAZAR_RECETADOS", "MED_COLESTEROL_CONSUMIDOS", "MED_COLESTEROL_RECETADOS", "MED_DIABETES_CONSUMIDOS", "MED_DIABETES_RECETADOS", "PROD_NATURISTA_CONSUMIDOS", "PROD_NATURISTA_RECETADOS"}),
+				    #"Changed Type with Locale40" = Table.TransformColumnTypes(#"Replaced Value7", {{"ACTV_FISICA_ACTV_PRINCIPAL", type text}}, "en-US"),
+				    #"Merged Queries3" = Table.NestedJoin(#"Changed Type with Locale40", {"ACTV_FISICA_ACTV_PRINCIPAL"}, #"Tipo de Activ Fisica Activ Principal", {"Código "}, "Tipo de Activ Fisica Activ Principal", JoinKind.LeftOuter),
+				    #"Expanded Tipo de Activ Fisica Activ Principal" = Table.ExpandTableColumn(#"Merged Queries3", "Tipo de Activ Fisica Activ Principal", {"Descripción"}, {"Tipo de Activ Fisica Activ Principal.Descripción"}),
+				    #"Reordered Columns3" = Table.ReorderColumns(#"Expanded Tipo de Activ Fisica Activ Principal",{"IDCOMUNIDAD", "COMUNIDAD AUTONOMA", "SEXO", "IDHOGAR", "EDAD", "CLASE_SOCIAL_OCUPACION", "Clase Social por Ocupación.Descripción", "ALTURA", "PESO", "IMC_INE", "Estado Nutricional INE", "IMC_CLINICO", "DIAG_TENSION_ALTA", "DIAG_ENFERMEDADES_CORAZON", "DIAG_DIABETES", "DIAG_ULCERAS", "DIAG_COLESTEROL", "DIAG_ESTRENIMENTO", "DIAG_CIRROSIS_DISF_HEPATICA", "DIAG_DEPRESION", "DIAG_ANSIEDAD_CRONICA", "DIAG_OSTEOPOROSIS", "DIAG_PROBLEMAS_TIROIDES", "DIAG_PROBLEMAS_RINON", "VIT_MIN_TON_CONSUMIDOS", "VIT_MIN_TON_RECETADOS", "MED_CORAZON_CONSUMIDOS", "MED_CORAZON_RECETADOS", "MED_TENSION_CONSUMIDOS", "MED_TENSION_RECETADOS", "MED_ESTOMAGO_DIGEST_CONSUMIDOS", "MED_ESTOMAGO_DIGEST_RECETADOS", "MED_DEPRESION_CONSUMIDOS", "MED_DEPRESION_RECETADOS", "MED_ADELGAZAR_CONSUMIDOS", "MED_ADELGAZAR_RECETADOS", "MED_COLESTEROL_CONSUMIDOS", "MED_COLESTEROL_RECETADOS", "MED_DIABETES_CONSUMIDOS", "MED_DIABETES_RECETADOS", "PROD_NATURISTA_CONSUMIDOS", "PROD_NATURISTA_RECETADOS", "ACTV_FISICA_ACTV_PRINCIPAL", "Tipo de Activ Fisica Activ Principal.Descripción", "FREC_ACTV_FISICA", "DIAS_ACTV_FISICA", "HORAS_ACTV_FISICA_SEMANA", "MINUTOS_ACTV_FISICA_SEMANA", "TOTAL_MINUTOS_ACTV_FISICA_SEMANA", "DIAS_ACTV_FISICA_MUSCULACION_SEMANA", "HORAS_SEDENTARISMO_DIA", "MINUTOS_SEDENTARISMO_DIA", "TOTAL_MINUTOS_SEDENTARISMO_DIA", "TOTAL_MINUTOS_SEDENTARISMO_SEMANA", "FREC_FRUTA_FRESCA_EXCLU_ZUMOS", "CONSUM_FRUTA_FRESCA_EXCLU_ZUMOS", "FREC_CARNES", "FREC_HUEVOS", "FREC_PESCADOS", "FREC_PASTA_ARROZ_PATATAS", "FREC_PAN_CEREALES", "FREC_VERDURAS_ENSALADAS_HORTALIZAS", "CONSUM_VERDURAS_ENSALADAS_HORTALIZAS", "FREC_LEGUMBRES", "FREC_EMBUTIDOS_FIAMBRES", "FREC_LACTEOS_LECHE_QUESO_YOGUR", "FREC_DULCES_GALLETAS_BOLLERIAS", "FREC_REFRESCOS_AZUCAR", "FREC_COMIDA_RAPIDA_PIZZA_HAMBURGUESAS", "FREC_APERITIVOS_COMIDAS_SALADAS", "FREC_ZUMOS_NATURALES_FRUTAS_VERDURAS", "CONSUM_ZUMOS_NATURALES_FRUTAS_VERDURAS", "FREC_DIARIA_FRUTAS_ZUMOS_NATURALES", "CONSUM_FRUTAS__ZUMOS_NATURALES_FRUTAS_VERDURAS"}),
+				    #"Changed Type with Locale41" = Table.TransformColumnTypes(#"Reordered Columns3", {{"FREC_ACTV_FISICA", type text}}, "en-US"),
+				    #"Merged Queries4" = Table.NestedJoin(#"Changed Type with Locale41", {"FREC_ACTV_FISICA"}, #"Frecuencia Activ Fisica", {"Código "}, "Frecuencia Activ Fisica", JoinKind.LeftOuter),
+				    #"Expanded Frecuencia Activ Fisica" = Table.ExpandTableColumn(#"Merged Queries4", "Frecuencia Activ Fisica", {"Descripción"}, {"Descripción"}),
+				    #"Renamed Columns2" = Table.RenameColumns(#"Expanded Frecuencia Activ Fisica",{{"Descripción", "Frecuencia Activ Fisica"}}),
+				    #"Reordered Columns4" = Table.ReorderColumns(#"Renamed Columns2",{"IDCOMUNIDAD", "COMUNIDAD AUTONOMA", "SEXO", "IDHOGAR", "EDAD", "CLASE_SOCIAL_OCUPACION", "Clase Social por Ocupación.Descripción", "ALTURA", "PESO", "IMC_INE", "Estado Nutricional INE", "IMC_CLINICO", "DIAG_TENSION_ALTA", "DIAG_ENFERMEDADES_CORAZON", "DIAG_DIABETES", "DIAG_ULCERAS", "DIAG_COLESTEROL", "DIAG_ESTRENIMENTO", "DIAG_CIRROSIS_DISF_HEPATICA", "DIAG_DEPRESION", "DIAG_ANSIEDAD_CRONICA", "DIAG_OSTEOPOROSIS", "DIAG_PROBLEMAS_TIROIDES", "DIAG_PROBLEMAS_RINON", "VIT_MIN_TON_CONSUMIDOS", "VIT_MIN_TON_RECETADOS", "MED_CORAZON_CONSUMIDOS", "MED_CORAZON_RECETADOS", "MED_TENSION_CONSUMIDOS", "MED_TENSION_RECETADOS", "MED_ESTOMAGO_DIGEST_CONSUMIDOS", "MED_ESTOMAGO_DIGEST_RECETADOS", "MED_DEPRESION_CONSUMIDOS", "MED_DEPRESION_RECETADOS", "MED_ADELGAZAR_CONSUMIDOS", "MED_ADELGAZAR_RECETADOS", "MED_COLESTEROL_CONSUMIDOS", "MED_COLESTEROL_RECETADOS", "MED_DIABETES_CONSUMIDOS", "MED_DIABETES_RECETADOS", "PROD_NATURISTA_CONSUMIDOS", "PROD_NATURISTA_RECETADOS", "ACTV_FISICA_ACTV_PRINCIPAL", "Tipo de Activ Fisica Activ Principal.Descripción", "FREC_ACTV_FISICA", "Frecuencia Activ Fisica", "DIAS_ACTV_FISICA", "HORAS_ACTV_FISICA_SEMANA", "MINUTOS_ACTV_FISICA_SEMANA", "TOTAL_MINUTOS_ACTV_FISICA_SEMANA", "DIAS_ACTV_FISICA_MUSCULACION_SEMANA", "HORAS_SEDENTARISMO_DIA", "MINUTOS_SEDENTARISMO_DIA", "TOTAL_MINUTOS_SEDENTARISMO_DIA", "TOTAL_MINUTOS_SEDENTARISMO_SEMANA", "FREC_FRUTA_FRESCA_EXCLU_ZUMOS", "CONSUM_FRUTA_FRESCA_EXCLU_ZUMOS", "FREC_CARNES", "FREC_HUEVOS", "FREC_PESCADOS", "FREC_PASTA_ARROZ_PATATAS", "FREC_PAN_CEREALES", "FREC_VERDURAS_ENSALADAS_HORTALIZAS", "CONSUM_VERDURAS_ENSALADAS_HORTALIZAS", "FREC_LEGUMBRES", "FREC_EMBUTIDOS_FIAMBRES", "FREC_LACTEOS_LECHE_QUESO_YOGUR", "FREC_DULCES_GALLETAS_BOLLERIAS", "FREC_REFRESCOS_AZUCAR", "FREC_COMIDA_RAPIDA_PIZZA_HAMBURGUESAS", "FREC_APERITIVOS_COMIDAS_SALADAS", "FREC_ZUMOS_NATURALES_FRUTAS_VERDURAS", "CONSUM_ZUMOS_NATURALES_FRUTAS_VERDURAS", "FREC_DIARIA_FRUTAS_ZUMOS_NATURALES", "CONSUM_FRUTAS__ZUMOS_NATURALES_FRUTAS_VERDURAS"}),
+				    #"Changed Type with Locale42" = Table.TransformColumnTypes(#"Reordered Columns4", {{"DIAS_ACTV_FISICA", Int64.Type}}, "en-US"),
+				    #"Changed Type with Locale43" = Table.TransformColumnTypes(#"Changed Type with Locale42", {{"HORAS_ACTV_FISICA_SEMANA", Int64.Type}}, "en-US"),
+				    #"Changed Type with Locale44" = Table.TransformColumnTypes(#"Changed Type with Locale43", {{"MINUTOS_ACTV_FISICA_SEMANA", Int64.Type}}, "en-US"),
+				    #"Changed Type with Locale45" = Table.TransformColumnTypes(#"Changed Type with Locale44", {{"TOTAL_MINUTOS_ACTV_FISICA_SEMANA", Int64.Type}}, "en-US"),
+				    #"Changed Type with Locale46" = Table.TransformColumnTypes(#"Changed Type with Locale45", {{"DIAS_ACTV_FISICA_MUSCULACION_SEMANA", Int64.Type}}, "en-US"),
+				    #"Changed Type with Locale47" = Table.TransformColumnTypes(#"Changed Type with Locale46", {{"HORAS_SEDENTARISMO_DIA", Int64.Type}}, "en-US"),
+				    #"Changed Type with Locale48" = Table.TransformColumnTypes(#"Changed Type with Locale47", {{"MINUTOS_SEDENTARISMO_DIA", Int64.Type}}, "en-US"),
+				    #"Changed Type with Locale49" = Table.TransformColumnTypes(#"Changed Type with Locale48", {{"TOTAL_MINUTOS_SEDENTARISMO_DIA", Int64.Type}}, "en-US"),
+				    #"Changed Type with Locale50" = Table.TransformColumnTypes(#"Changed Type with Locale49", {{"TOTAL_MINUTOS_SEDENTARISMO_SEMANA", Int64.Type}}, "en-US"),
+				    #"Changed Type with Locale51" = Table.TransformColumnTypes(#"Changed Type with Locale50", {{"CONSUM_FRUTA_FRESCA_EXCLU_ZUMOS", Int64.Type}}, "en-US"),
+				    #"Changed Type with Locale52" = Table.TransformColumnTypes(#"Changed Type with Locale51", {{"CONSUM_VERDURAS_ENSALADAS_HORTALIZAS", Int64.Type}}, "en-US"),
+				    #"Changed Type with Locale53" = Table.TransformColumnTypes(#"Changed Type with Locale52", {{"CONSUM_ZUMOS_NATURALES_FRUTAS_VERDURAS", Int64.Type}}, "en-US"),
+				    #"Changed Type3" = Table.TransformColumnTypes(#"Changed Type with Locale53",{{"CONSUM_FRUTAS__ZUMOS_NATURALES_FRUTAS_VERDURAS", Int64.Type}}),
+				    #"Changed Type with Locale54" = Table.TransformColumnTypes(#"Changed Type3", {{"CONSUM_FRUTAS__ZUMOS_NATURALES_FRUTAS_VERDURAS", Int64.Type}}, "en-US"),
+				    #"Changed Type with Locale55" = Table.TransformColumnTypes(#"Changed Type with Locale54", {{"FREC_FRUTA_FRESCA_EXCLU_ZUMOS", type text}}, "en-US"),
+				    #"Changed Type with Locale56" = Table.TransformColumnTypes(#"Changed Type with Locale55", {{"FREC_CARNES", type text}}, "en-US"),
+				    #"Changed Type with Locale57" = Table.TransformColumnTypes(#"Changed Type with Locale56", {{"FREC_HUEVOS", type text}}, "en-US"),
+				    #"Changed Type with Locale58" = Table.TransformColumnTypes(#"Changed Type with Locale57", {{"FREC_PESCADOS", type text}}, "en-US"),
+				    #"Changed Type with Locale59" = Table.TransformColumnTypes(#"Changed Type with Locale58", {{"FREC_PASTA_ARROZ_PATATAS", type text}}, "en-US"),
+				    #"Changed Type with Locale60" = Table.TransformColumnTypes(#"Changed Type with Locale59", {{"FREC_PAN_CEREALES", type text}}, "en-US"),
+				    #"Changed Type with Locale61" = Table.TransformColumnTypes(#"Changed Type with Locale60", {{"FREC_VERDURAS_ENSALADAS_HORTALIZAS", type text}}, "en-US"),
+				    #"Changed Type with Locale62" = Table.TransformColumnTypes(#"Changed Type with Locale61", {{"FREC_LEGUMBRES", type text}}, "en-US"),
+				    #"Changed Type with Locale63" = Table.TransformColumnTypes(#"Changed Type with Locale62", {{"FREC_EMBUTIDOS_FIAMBRES", type text}}, "en-US"),
+				    #"Changed Type with Locale64" = Table.TransformColumnTypes(#"Changed Type with Locale63", {{"FREC_LACTEOS_LECHE_QUESO_YOGUR", type text}}, "en-US"),
+				    #"Changed Type with Locale65" = Table.TransformColumnTypes(#"Changed Type with Locale64", {{"FREC_DULCES_GALLETAS_BOLLERIAS", type text}}, "en-US"),
+				    #"Changed Type with Locale66" = Table.TransformColumnTypes(#"Changed Type with Locale65", {{"FREC_REFRESCOS_AZUCAR", type text}}, "en-US"),
+				    #"Changed Type with Locale67" = Table.TransformColumnTypes(#"Changed Type with Locale66", {{"FREC_COMIDA_RAPIDA_PIZZA_HAMBURGUESAS", type text}}, "en-US"),
+				    #"Changed Type with Locale68" = Table.TransformColumnTypes(#"Changed Type with Locale67", {{"FREC_APERITIVOS_COMIDAS_SALADAS", type text}}, "en-US"),
+				    #"Changed Type with Locale69" = Table.TransformColumnTypes(#"Changed Type with Locale68", {{"FREC_ZUMOS_NATURALES_FRUTAS_VERDURAS", type text}}, "en-US"),
+				    #"Changed Type with Locale70" = Table.TransformColumnTypes(#"Changed Type with Locale69", {{"FREC_DIARIA_FRUTAS_ZUMOS_NATURALES", type text}}, "en-US"),
+				    #"Changed Type4" = Table.TransformColumnTypes(#"Changed Type with Locale70",{{"FREC_DIARIA_FRUTAS_ZUMOS_NATURALES", Int64.Type}}),
+				    #"Changed Type with Locale71" = Table.TransformColumnTypes(#"Changed Type4", {{"FREC_DIARIA_FRUTAS_ZUMOS_NATURALES", type text}}, "en-US"),
+				    #"Replaced Value8" = Table.ReplaceValue(#"Changed Type with Locale71","1","Una o más veces al día",Replacer.ReplaceText,{"FREC_FRUTA_FRESCA_EXCLU_ZUMOS", "FREC_CARNES", "FREC_HUEVOS", "FREC_PESCADOS", "FREC_PASTA_ARROZ_PATATAS", "FREC_PAN_CEREALES", "FREC_VERDURAS_ENSALADAS_HORTALIZAS", "FREC_LEGUMBRES", "FREC_EMBUTIDOS_FIAMBRES", "FREC_LACTEOS_LECHE_QUESO_YOGUR", "FREC_DULCES_GALLETAS_BOLLERIAS", "FREC_REFRESCOS_AZUCAR", "FREC_COMIDA_RAPIDA_PIZZA_HAMBURGUESAS", "FREC_APERITIVOS_COMIDAS_SALADAS", "FREC_ZUMOS_NATURALES_FRUTAS_VERDURAS", "FREC_DIARIA_FRUTAS_ZUMOS_NATURALES"}),
+				    #"Replaced Value9" = Table.ReplaceValue(#"Replaced Value8","2","De 4 a 6 veces a la semana",Replacer.ReplaceText,{"FREC_FRUTA_FRESCA_EXCLU_ZUMOS", "FREC_CARNES", "FREC_HUEVOS", "FREC_PESCADOS", "FREC_PASTA_ARROZ_PATATAS", "FREC_PAN_CEREALES", "FREC_VERDURAS_ENSALADAS_HORTALIZAS", "FREC_LEGUMBRES", "FREC_EMBUTIDOS_FIAMBRES", "FREC_LACTEOS_LECHE_QUESO_YOGUR", "FREC_DULCES_GALLETAS_BOLLERIAS", "FREC_REFRESCOS_AZUCAR", "FREC_COMIDA_RAPIDA_PIZZA_HAMBURGUESAS", "FREC_APERITIVOS_COMIDAS_SALADAS", "FREC_ZUMOS_NATURALES_FRUTAS_VERDURAS", "FREC_DIARIA_FRUTAS_ZUMOS_NATURALES"}),
+				    #"Replaced Value10" = Table.ReplaceValue(#"Replaced Value9","3","Tres veces a la semana",Replacer.ReplaceText,{"FREC_FRUTA_FRESCA_EXCLU_ZUMOS", "FREC_CARNES", "FREC_HUEVOS", "FREC_PESCADOS", "FREC_PASTA_ARROZ_PATATAS", "FREC_PAN_CEREALES", "FREC_VERDURAS_ENSALADAS_HORTALIZAS", "FREC_LEGUMBRES", "FREC_EMBUTIDOS_FIAMBRES", "FREC_LACTEOS_LECHE_QUESO_YOGUR", "FREC_DULCES_GALLETAS_BOLLERIAS", "FREC_REFRESCOS_AZUCAR", "FREC_COMIDA_RAPIDA_PIZZA_HAMBURGUESAS", "FREC_APERITIVOS_COMIDAS_SALADAS", "FREC_ZUMOS_NATURALES_FRUTAS_VERDURAS", "FREC_DIARIA_FRUTAS_ZUMOS_NATURALES"}),
+				    #"Replaced Value11" = Table.ReplaceValue(#"Replaced Value10","4","Una o dos veces a la semana",Replacer.ReplaceText,{"FREC_FRUTA_FRESCA_EXCLU_ZUMOS", "FREC_CARNES", "FREC_HUEVOS", "FREC_PESCADOS", "FREC_PASTA_ARROZ_PATATAS", "FREC_PAN_CEREALES", "FREC_VERDURAS_ENSALADAS_HORTALIZAS", "FREC_LEGUMBRES", "FREC_EMBUTIDOS_FIAMBRES", "FREC_LACTEOS_LECHE_QUESO_YOGUR", "FREC_DULCES_GALLETAS_BOLLERIAS", "FREC_REFRESCOS_AZUCAR", "FREC_COMIDA_RAPIDA_PIZZA_HAMBURGUESAS", "FREC_APERITIVOS_COMIDAS_SALADAS", "FREC_ZUMOS_NATURALES_FRUTAS_VERDURAS", "FREC_DIARIA_FRUTAS_ZUMOS_NATURALES"}),
+				    #"Replaced Value12" = Table.ReplaceValue(#"Replaced Value11","5","Menos de una vez a la semana",Replacer.ReplaceText,{"FREC_FRUTA_FRESCA_EXCLU_ZUMOS", "FREC_CARNES", "FREC_HUEVOS", "FREC_PESCADOS", "FREC_PASTA_ARROZ_PATATAS", "FREC_PAN_CEREALES", "FREC_VERDURAS_ENSALADAS_HORTALIZAS", "FREC_LEGUMBRES", "FREC_EMBUTIDOS_FIAMBRES", "FREC_LACTEOS_LECHE_QUESO_YOGUR", "FREC_DULCES_GALLETAS_BOLLERIAS", "FREC_REFRESCOS_AZUCAR", "FREC_COMIDA_RAPIDA_PIZZA_HAMBURGUESAS", "FREC_APERITIVOS_COMIDAS_SALADAS", "FREC_ZUMOS_NATURALES_FRUTAS_VERDURAS", "FREC_DIARIA_FRUTAS_ZUMOS_NATURALES"}),
+				    #"Replaced Value13" = Table.ReplaceValue(#"Replaced Value12","6","Nunca",Replacer.ReplaceText,{"FREC_FRUTA_FRESCA_EXCLU_ZUMOS", "FREC_CARNES", "FREC_HUEVOS", "FREC_PESCADOS", "FREC_PASTA_ARROZ_PATATAS", "FREC_PAN_CEREALES", "FREC_VERDURAS_ENSALADAS_HORTALIZAS", "FREC_LEGUMBRES", "FREC_EMBUTIDOS_FIAMBRES", "FREC_LACTEOS_LECHE_QUESO_YOGUR", "FREC_DULCES_GALLETAS_BOLLERIAS", "FREC_REFRESCOS_AZUCAR", "FREC_COMIDA_RAPIDA_PIZZA_HAMBURGUESAS", "FREC_APERITIVOS_COMIDAS_SALADAS", "FREC_ZUMOS_NATURALES_FRUTAS_VERDURAS", "FREC_DIARIA_FRUTAS_ZUMOS_NATURALES"}),
+				    #"Replaced Value14" = Table.ReplaceValue(#"Replaced Value13",null,"No contesta",Replacer.ReplaceValue,{"FREC_FRUTA_FRESCA_EXCLU_ZUMOS", "FREC_CARNES", "FREC_HUEVOS", "FREC_PESCADOS", "FREC_PASTA_ARROZ_PATATAS", "FREC_PAN_CEREALES", "FREC_VERDURAS_ENSALADAS_HORTALIZAS", "FREC_LEGUMBRES", "FREC_EMBUTIDOS_FIAMBRES", "FREC_LACTEOS_LECHE_QUESO_YOGUR", "FREC_DULCES_GALLETAS_BOLLERIAS", "FREC_REFRESCOS_AZUCAR", "FREC_COMIDA_RAPIDA_PIZZA_HAMBURGUESAS", "FREC_APERITIVOS_COMIDAS_SALADAS", "FREC_ZUMOS_NATURALES_FRUTAS_VERDURAS", "FREC_DIARIA_FRUTAS_ZUMOS_NATURALES"})
+				in
+				    #"Replaced Value14"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

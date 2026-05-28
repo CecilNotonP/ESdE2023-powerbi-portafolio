@@ -1,0 +1,56 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
+  "name": "13a56d477af8bde7b3bb",
+  "position": {
+    "x": 350.4,
+    "y": 568.8,
+    "z": 4000,
+    "height": 151.2,
+    "width": 400.79999999999995,
+    "tabOrder": 4000
+  },
+  "visual": {
+    "visualType": "cardVisual",
+    "query": {
+      "queryState": {
+        "Data": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "adulto_limpio"
+                    }
+                  },
+                  "Property": "Minutos Sedentarismo Semana Mediana"
+                }
+              },
+              "queryRef": "adulto_limpio.Minutos Sedentarismo Semana Mediana",
+              "nativeQueryRef": "Minutos Sedentarismo Semana Mediana"
+            }
+          ]
+        }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Measure": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "adulto_limpio"
+                  }
+                },
+                "Property": "Minutos Sedentarismo Semana Mediana"
+              }
+            },
+            "direction": "Descending"
+          }
+        ],
+        "isDefaultSort": true
+      }
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

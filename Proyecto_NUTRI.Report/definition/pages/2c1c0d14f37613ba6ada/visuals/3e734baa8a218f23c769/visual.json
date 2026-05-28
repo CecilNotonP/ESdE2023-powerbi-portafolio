@@ -1,0 +1,265 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
+  "name": "3e734baa8a218f23c769",
+  "position": {
+    "x": 477,
+    "y": 0,
+    "z": 1000,
+    "height": 385,
+    "width": 777,
+    "tabOrder": 1000
+  },
+  "visual": {
+    "visualType": "clusteredBarChart",
+    "query": {
+      "queryState": {
+        "Category": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "adulto_limpio"
+                    }
+                  },
+                  "Property": "Grupo Etario"
+                }
+              },
+              "queryRef": "adulto_limpio.Grupo Etario",
+              "nativeQueryRef": "Grupo Etario",
+              "active": true
+            }
+          ]
+        },
+        "Y": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "adulto_limpio"
+                    }
+                  },
+                  "Property": "% Consume Comida Rapida Frecuente"
+                }
+              },
+              "queryRef": "adulto_limpio.% Consume Comida Rapida Frecuente",
+              "nativeQueryRef": "% Consume Comida Rapida Frecuente"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "adulto_limpio"
+                    }
+                  },
+                  "Property": "% Consume Embutidos Frecuente"
+                }
+              },
+              "queryRef": "adulto_limpio.% Consume Embutidos Frecuente",
+              "nativeQueryRef": "% Consume Embutidos Frecuente"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "adulto_limpio"
+                    }
+                  },
+                  "Property": "% Consume Fruta Diario"
+                }
+              },
+              "queryRef": "adulto_limpio.% Consume Fruta Diario",
+              "nativeQueryRef": "% Consume Fruta Diario"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "adulto_limpio"
+                    }
+                  },
+                  "Property": "% Consume Refrescos Frecuente"
+                }
+              },
+              "queryRef": "adulto_limpio.% Consume Refrescos Frecuente",
+              "nativeQueryRef": "% Consume Refrescos Frecuente"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "adulto_limpio"
+                    }
+                  },
+                  "Property": "% Consume Verdura Diario"
+                }
+              },
+              "queryRef": "adulto_limpio.% Consume Verdura Diario",
+              "nativeQueryRef": "% Consume Verdura Diario"
+            }
+          ]
+        }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Column": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "adulto_limpio"
+                  }
+                },
+                "Property": "Grupo Etario"
+              }
+            },
+            "direction": "Descending"
+          }
+        ]
+      }
+    },
+    "objects": {
+      "legend": [
+        {
+          "properties": {
+            "showGradientLegend": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "showTitle": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "valueAxis": [
+        {
+          "properties": {
+            "showAxisTitle": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Frecuencia de Consumo Alimentario por Grupo Etario'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "5c528781228dc40db80d",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "adulto_limpio"
+              }
+            },
+            "Property": "Grupo Etario"
+          }
+        },
+        "type": "Categorical",
+        "filter": {
+          "Version": 2,
+          "From": [
+            {
+              "Name": "a",
+              "Entity": "adulto_limpio",
+              "Type": 0
+            }
+          ],
+          "Where": [
+            {
+              "Condition": {
+                "In": {
+                  "Expressions": [
+                    {
+                      "Column": {
+                        "Expression": {
+                          "SourceRef": {
+                            "Source": "a"
+                          }
+                        },
+                        "Property": "Grupo Etario"
+                      }
+                    }
+                  ],
+                  "Values": [
+                    [
+                      {
+                        "Literal": {
+                          "Value": "'18-34'"
+                        }
+                      }
+                    ],
+                    [
+                      {
+                        "Literal": {
+                          "Value": "'35-49'"
+                        }
+                      }
+                    ],
+                    [
+                      {
+                        "Literal": {
+                          "Value": "'50-64'"
+                        }
+                      }
+                    ],
+                    [
+                      {
+                        "Literal": {
+                          "Value": "'65+'"
+                        }
+                      }
+                    ]
+                  ]
+                }
+              }
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

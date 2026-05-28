@@ -1,0 +1,4 @@
+relationship 8f5151c6-116c-25a8-daab-a544e73f1633
+	fromColumn: adulto_limpio.IDCOMUNIDAD
+	toColumn: 'CCAA Diccionario'.'Código '
+

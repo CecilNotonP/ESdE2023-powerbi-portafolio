@@ -1,0 +1,133 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
+  "name": "2b821b6227f0d8809d56",
+  "position": {
+    "x": 787,
+    "y": 10,
+    "z": 0,
+    "height": 573,
+    "width": 493,
+    "tabOrder": 0
+  },
+  "visual": {
+    "visualType": "clusteredBarChart",
+    "query": {
+      "queryState": {
+        "Category": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "adulto_limpio"
+                    }
+                  },
+                  "Property": "COMUNIDAD AUTONOMA"
+                }
+              },
+              "queryRef": "adulto_limpio.COMUNIDAD AUTONOMA",
+              "nativeQueryRef": "COMUNIDAD AUTONOMA",
+              "active": true
+            }
+          ]
+        },
+        "Y": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "adulto_limpio"
+                    }
+                  },
+                  "Property": "Prevalencia Exceso Peso"
+                }
+              },
+              "queryRef": "adulto_limpio.Prevalencia Exceso Peso",
+              "nativeQueryRef": "Prevalencia Exceso Peso"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "adulto_limpio"
+                    }
+                  },
+                  "Property": "Prevalencia Obesidad"
+                }
+              },
+              "queryRef": "adulto_limpio.Prevalencia Obesidad",
+              "nativeQueryRef": "Prevalencia Obesidad"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "adulto_limpio"
+                    }
+                  },
+                  "Property": "Prevalencia Sobrepeso"
+                }
+              },
+              "queryRef": "adulto_limpio.Prevalencia Sobrepeso",
+              "nativeQueryRef": "Prevalencia Sobrepeso"
+            }
+          ]
+        }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Measure": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "adulto_limpio"
+                  }
+                },
+                "Property": "Prevalencia Exceso Peso"
+              }
+            },
+            "direction": "Descending"
+          }
+        ],
+        "isDefaultSort": true
+      }
+    },
+    "objects": {
+      "legend": [
+        {
+          "properties": {
+            "showTitle": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Composicion de Exceso de Peso por Comunidad Autonoma'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

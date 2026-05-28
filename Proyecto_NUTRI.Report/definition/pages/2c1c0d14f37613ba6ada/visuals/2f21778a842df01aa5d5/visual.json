@@ -1,0 +1,41 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
+  "name": "2f21778a842df01aa5d5",
+  "position": {
+    "x": 0,
+    "y": 468,
+    "z": 3000,
+    "height": 124.8,
+    "width": 350.4,
+    "tabOrder": 3000
+  },
+  "visual": {
+    "visualType": "cardVisual",
+    "query": {
+      "queryState": {
+        "Data": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "adulto_limpio"
+                    }
+                  },
+                  "Property": "Actv Fisica Horas Dia Texto"
+                }
+              },
+              "queryRef": "adulto_limpio.Actv Fisica Horas Dia Texto",
+              "nativeQueryRef": "Actv Fisica Horas Dia Texto"
+            }
+          ]
+        }
+      },
+      "sortDefinition": {
+        "isDefaultSort": true
+      }
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

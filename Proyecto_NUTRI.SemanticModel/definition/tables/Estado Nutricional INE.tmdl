@@ -1,0 +1,33 @@
+table 'Estado Nutricional INE'
+	lineageTag: c7fde4be-bc7e-4aca-bd42-5043b5853f57
+
+	column 'Código '
+		dataType: int64
+		formatString: 0
+		lineageTag: 241d564c-57ec-4cec-9f82-dacae31b60b6
+		summarizeBy: sum
+		sourceColumn: "Código "
+
+		annotation SummarizationSetBy = Automatic
+
+	column Descripción
+		dataType: string
+		lineageTag: b409ac8a-f274-449c-ae74-2f6790fb77a3
+		summarizeBy: none
+		sourceColumn: Descripción
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Estado Nutricional INE' = m
+		mode: import
+		source =
+				let
+				    Source = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText("i45WMlTSUQpILc5XyMwrLk3LTM5MzStJVYrViVYyAsr45Rfl5hcApcEixkCR4PykolS4iAlQxD8ptTgzJTEFLGAJ1qSQnJ9XXJKoFBsLAA==", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type nullable text) meta [Serialized.Text = true]) in type table [#"Código " = _t, Descripción = _t]),
+				    #"Changed Type" = Table.TransformColumnTypes(Source,{{"Código ", Int64.Type}, {"Descripción", type text}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

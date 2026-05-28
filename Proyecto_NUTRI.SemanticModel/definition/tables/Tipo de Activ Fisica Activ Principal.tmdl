@@ -1,0 +1,33 @@
+table 'Tipo de Activ Fisica Activ Principal'
+	lineageTag: e8abfd8f-f615-44a2-bef4-1328fff0efce
+
+	column 'Código '
+		dataType: string
+		lineageTag: bdaa4475-26fa-45e7-a4a0-150c6e172fbd
+		summarizeBy: none
+		sourceColumn: "Código "
+
+		annotation SummarizationSetBy = Automatic
+
+	column Descripción
+		dataType: string
+		lineageTag: 76327204-b238-4352-930a-380accf1e460
+		summarizeBy: none
+		sourceColumn: Descripción
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Tipo de Activ Fisica Activ Principal' = m
+		mode: import
+		source =
+				let
+				    Source = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText("fZA7bgMxDESvQqheIMjHJ4jrFEm5cEFrZw0FtCRTUgDvnXyBtL5YuLKRIkU64mn4htA4ukc3uA/EylN6YBKmI5+TUmatoAkr+UwaeWK3G0b3ZPEtKAf8m6USImGGr42VDspxQrFIycILH4MVpkKJUOYGXVLp8meTv9prtHgaSARf60Qsh+t3pIxi9G5d+V/frPDNRtx0L6Z7B0tYerqyggudGkhxagGK2E/7vYLm66UEn/r2xrbfrDtL8LwXdBibyI37tPZU+5XdDw==", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type nullable text) meta [Serialized.Text = true]) in type table [#"Código " = _t, Descripción = _t]),
+				    #"Changed Type" = Table.TransformColumnTypes(Source,{{"Código ", Int64.Type}, {"Descripción", type text}}),
+				    #"Changed Type with Locale" = Table.TransformColumnTypes(#"Changed Type", {{"Código ", type text}}, "en-US")
+				in
+				    #"Changed Type with Locale"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

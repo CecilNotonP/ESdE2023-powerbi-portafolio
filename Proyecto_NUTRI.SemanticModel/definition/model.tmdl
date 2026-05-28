@@ -1,0 +1,23 @@
+model Model
+	culture: en-US
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	sourceQueryCulture: es-ES
+	dataAccessOptions
+		legacyRedirects
+		returnErrorValuesAsNull
+
+annotation __PBI_TimeIntelligenceEnabled = 1
+
+annotation PBI_QueryOrder = ["adulto_limpio","CCAA Diccionario","Clase Social por Ocupación","Estado Nutricional INE","Tipo de Activ Fisica Activ Principal","Frecuencia Activ Fisica"]
+
+annotation PBI_ProTooling = ["DevMode"]
+
+ref table adulto_limpio
+ref table 'CCAA Diccionario'
+ref table 'Clase Social por Ocupación'
+ref table 'Estado Nutricional INE'
+ref table 'Tipo de Activ Fisica Activ Principal'
+ref table 'Frecuencia Activ Fisica'
+
+ref cultureInfo en-US
+
