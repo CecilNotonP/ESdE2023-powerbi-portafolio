@@ -1,9 +1,9 @@
 
-**Análisis de la Encuesta Nacional de Salud de España (ESdE 2023): Viabilidad de Mercado para Negocio de Indole Nutricional en España**
+**Análisis de la Encuesta de Salud de España (ESdE 2023): Viabilidad de Mercado para Negocio de Indole Nutricional en España**
 
 **Objetivo del Proyecto**
 
-Este proyecto de Business Intelligence analiza la base de datos de la **Encuesta Nacional de Salud de España (ESdE 2023)**, procesando un volumen de **21,032 registros de adultos encuestados**. El propósito es identificar patrones de distribución geográfica y demográfica de factores de riesgo metabólicos y conductuales (exceso de peso, sedentarismo, alimentación) para justificar estratégicamente la inversión y localización de un negocio de indole nutricional en el territorio español.
+Este proyecto de Business Intelligence analiza la base de datos de la **Encuesta de Salud de España (ESdE 2023)**, procesando un volumen de **21,032 registros de adultos encuestados**. El propósito es identificar patrones de distribución geográfica y demográfica de factores de riesgo metabólicos y conductuales (exceso de peso, sedentarismo, alimentación) para justificar estratégicamente la inversión y localización de un negocio de indole nutricional en el territorio español.
 
 ---
 
@@ -26,7 +26,7 @@ https://github.com/user-attachments/assets/d127ac44-c4b9-4e78-ae0c-af3f073ac23c
 
 ### Pestaña 2: Enfermedades de Índole Nutricional y Uso de Medicamentos
 Correlación entre Comunidades Autónomas, aparición de enfermedades específicas (Colesterol, Diabetes, Enfermedades del Corazón, Hipertensión) y consumo farmacológico.
-* *Insight destacado:* Se observa cómo la hipertensión llega a alcanzar picos del **50%** en el grupo de más de 65 años, abriendo una oportunidad clave para el diseño de servicios de nutrición clínica preventiva.
+* *Insight destacado:* Se observa cómo la hipertensión llega a alcanzar picos del **50%** en el grupo de más de 65 años, abriendo una oportunidad clave para el diseño de servicios de salud preventiva.
 
 <img width="1361" height="814" alt="image" src="https://github.com/user-attachments/assets/5b93ae00-6105-4e72-a5b5-44994ef26eae" />
 
