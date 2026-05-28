@@ -1,0 +1,11 @@
+# Cache y archivos temporales de Power BI
+*.tmp
+*.log
+ExtractedFolder/
+
+# Configuración personal del usuario (EVITA CONFLICTOS DE GIT)
+# Bloquea las credenciales locales y configuraciones de ventana de tu Power BI
+**/user.config
+
+# Archivos de copia de seguridad automáticos
+*.pbi.bak
